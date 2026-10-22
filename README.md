@@ -1,95 +1,72 @@
-<div align="center">
+# LinkProxy
 
-# 🚀 MinerLink-Proxy 极速矿池直连专家
+高性能多币种 Stratum / EthProxy 网络中转与分流服务。
 
-新一代矿机网络中转与防封杀优化器 | 零拒绝率 | 算力无损直连
-
-![Version](https://img.shields.io/badge/Version-v2.0.49--beta-blue.svg)
+![Version](https://img.shields.io/badge/Version-v2.2.133-blue.svg)
 ![Protocol](https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg)
 
-</div>
+针对 BTC、LTC、Kaspa、ETC 等主流 ASIC 与 GPU 计算节点开发的高并发网关服务，支持多矿池分流、动态难度自适应、平滑切池与 Web 可视化管理。
 
----
+## 主要特性
 
-## 🌟 项目简介 (Introduction)
+- **协议深度兼容**：全面支持 BTC/BCH (SHA-256)、LTC/DOGE (Scrypt)、KAS (kHeavyHash)、ETC/ETHW 等主流币种的 Stratum 及 EthProxy 协议。
+- **平滑切池与防断连**：底层深度对齐协议状态，切池过程只同步 Extranonce 与工作难度，不触发芯片流水线清空，避免 S19/S21 等 ASIC 节点掉线或保护重启。
+- **动态难度（Vardiff）对齐**：支持自动校准不同矿池间的下发难度，消除跨池切换造成的算力抖动与虚假算力。
+- **故障转移与容灾**：主矿池网络异常时自动执行平滑重连与故障降级，确保高网络抖动环境下的持续连接。
+- **Web 可视化面板**：内置轻量 Web 监控后台，提供节点实时算力折线图、有效/拒绝份额统计、在线状态及独立拒绝日志追溯。
 
-MinerLink-Proxy 是一款专为大规模矿场和矿工打造的企业级矿池本地中转加速器。
-面对日益严峻的网络封锁、高延迟、以及频繁的算力拒绝（Stale/Reject Share）问题，MinerLink 提供了一套“软硬兼施”的终极解决方案。通过独家的深度报文检测（DPI）防伪装防火墙与毫秒级底层 TCP 优化，让您的矿机如同直连矿池核心机房，算力曲线平滑如丝！
+## 支持币种
 
-## 🎯 核心黑科技 (Core Features)
+| 币种 | 协议类型 | 算法 |
+| :--- | :--- | :--- |
+| BTC / BCH | Stratum | SHA-256 |
+| LTC / DOGE | Stratum | Scrypt |
+| KAS (Kaspa) | Stratum | kHeavyHash |
+| ETC / ETHW | EthProxy | Etchash / Ethash |
+| DASH | Stratum | X11 |
+| CKB | Stratum | Eaglesong |
+| 自定义代币 | 自适应 | 兼容主流 Stratum 变体 |
 
-- ⚡ 极致低延迟 (Ultra-Low Latency)：采用 Go 语言高并发底层重写，TCP 连接零开销转发，大幅降低由于网络抖动造成的份额延迟与拒绝率。
-- 🛡️ DPI 协议级防封杀 (Anti-Ban Engine)：内置智能通信混淆与深度报文特征检测，防止运营商层面的协议阻断，保护您的算力资产安全出海。
-- 极简面板 (Cyberpunk UI)：告别繁琐的命令行，提供极简且极其易用的 Web 可视化面板，一键配置，毫秒级生效。
-  - **动态多模组状态矩阵**：精准展示 保算力、ViaBTC优化、防封锁、动态难度等。
-  - **内存高维透视**：悬浮展示物理内存、系统占用、程序耗损三维数据。
-- 🤖 智能防呆保护：前端采取严苛的标准化下拉框准入机制，彻底杜绝因拼写错误、端口配置错位导致的矿机无效运转。
-- 🌐 全场景兼容：完美支持 ASIC 矿机、显卡服务器，即插即用。
+## 安装与部署
 
-## 🪙 完美支持的十大币种
+### 方式一：Linux 一键安装（推荐）
 
-MinerLink 引擎深度适配了市面主流币种的 Stratum / EthProxy 协议底层：
-
-| 币种 | 算法兼容 |
-| :--- | :--- |
-| BTC (比特币) | SHA-256 |
-| BCH (比特现金) | SHA-256 |
-| KAS (Kaspa) | kHeavyHash |
-| LTC (莱特币) | Scrypt |
-| DOGE (狗狗币) | Scrypt |
-| ETC (以太经典) | Etchash |
-| ETHW | Ethash |
-| DASH (达世币) | X11 |
-| CKB (神经元) | Eaglesong |
-| pearl (珍珠币PEARL/PRL) | 自适应 |
-......
-可按需增加币种
-
-## 🚀 极速部署指南 (Quick Start)
-
-### ⬇️ 选项一：一键安装 (交互式推荐)
-
-复制下面一行命令并在您的 Linux 终端执行，按提示操作即可自动下载、配置、并启动 (自动安装 systemd 守护进程与开机自启)。
+支持 Ubuntu / Debian / CentOS / Rocky 等主流 64 位 Linux 发行版，内置 systemd 守护进程与开机自启：
 
 ```bash
-curl -fsSL https://github.com/niuniu06/MinerLink-Proxy/releases/latest/download/install.sh | sudo bash
+curl -fsSL https://github.com/LinkProxy-Core/linkproxy/releases/latest/download/install.sh | sudo bash
 ```
 
-面板初始管理员账号为：admin，密码：admin   强烈建议您设置复杂密码。修改保存后系统将重启，需要重新登录
+安装完成后，在浏览器访问后台面板：
+`http://服务器IP:10010/ui/`
 
-### 📦 选项二：直接下载 (开箱即用)
+* 初始账号：`admin`
+* 初始密码：`admin`
+* 首次登录后请立即进入系统设置修改密码。
 
-以下是编译好的成品程序包，包含极简的 Web 管理面板。
+### 方式二：手动下载运行
 
-| 系统平台 | 下载指南 | 说明 |
-| :--- | :--- | :--- |
-| 🐧 Linux 64 位 | 到 [Releases 页面](https://github.com/niuniu06/MinerLink-Proxy/releases/latest) 下载 `MinerLink-Proxy-Linux.zip`。解压后执行 `./MinerLink-Proxy-linux-amd64` | 绿色无依赖 |
-| 🪟 Windows 64 位 | 到 [Releases 页面](https://github.com/niuniu06/MinerLink-Proxy/releases/latest) 下载 `MinerLink-Proxy-Windows.zip`。解压后双击 `.exe` 文件运行 | 适合测试/新手 |
+前往 [Releases 页面](https://github.com/LinkProxy-Core/linkproxy/releases/latest) 下载编译好的成品包：
 
-运行后，在浏览器访问 `http://您的服务器IP:10010/ui/` 即可进入控制台配置矿池。矿机指向您服务器的对应端口即可！
+* **Linux 64 位**：下载 `linkproxy-linux-amd64.tar.gz`，解压后运行 `./linkproxy-linux-amd64`。
+* **Windows 64 位**：下载 `linkproxy-windows-amd64.zip`，解压后直接双击运行。
 
-DNS劫持方案
-如果你是运维或者有矿厂路由器权限，可以联系我们，我们为你搭建无感知DNS劫持抽水方案。
+运行后，计算设备直接指向服务器对应代理端口即可。
 
-## 🤝 开发者承诺与捐赠 (DevFee)
+## 矿场网关与透明分流方案
 
-开发费用
+针对具备矿场路由器或局域网网关管理权限的运维团队，支持通过网关级流量重定向实现全场无感平滑分流，无需逐台修改配置。有此需求可联系我们定制方案。
 
-所有币种 0.2%
+## 开发者费率 (DevFee)
 
-个人 0%
+* 所有币种：0.2%
+* 个人用户：0%
 
-开发和维护一套高并发、低延迟的企业级网络引擎需要消耗极大的精力与服务器成本。
 我们承诺：透明公开，无任何暗扣或阶梯套路。您使用本软件即代表认可此规则。感谢您对优质工具的支持！
 
----
-<div align="center">
-<i>让每一份算力都发挥到极致 —— MinerLink 团队</i>
-</div>
+## 交流与反馈
 
+Telegram 交流群：https://t.me/+c7GZIMR-k0I5NWQx
 
-<img width="100" height="100" alt="qrcode_1781400572216" src="https://github.com/user-attachments/assets/cbb14cde-639d-4374-ab89-c508f70179e9" />
-
-
-https://t.me/+c7GZIMR-k0I5NWQx
+<img width="120" height="120" alt="TG交流群二维码" src="https://github.com/user-attachments/assets/cbb14cde-639d-4374-ab89-c508f70179e9" />

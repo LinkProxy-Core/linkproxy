@@ -1,0 +1,31 @@
+# Binaries
+/proxy.exe
+/proxy
+*.exe
+*.dll
+
+# Database
+data/
+
+# Frontend dependencies
+frontend/node_modules/
+frontend/dist/
+
+# Logs
+*.log
+log/*.txt
+
+# Release archives and binaries
+MinerLink-Proxy-Linux.zip
+MinerLink-Proxy-Windows.zip
+MinerLink-Proxy-linux-amd64
+MinerLink-Proxy-windows-amd64.exe
+linkproxy-linux-amd64
+linkproxy-windows-amd64.exe
+linkproxy-linux-amd64.tar.gz
+linkproxy-windows-amd64.zip
+*.tar.gz
+*.zip
+
+# Reverse engineering tools
+tools/
