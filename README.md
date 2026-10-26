@@ -2,7 +2,7 @@
 
 高性能多币种 Stratum / EthProxy 网络中转与分流服务。
 
-![Version](https://img.shields.io/badge/Version-v2.2.133-blue.svg)
+![Version](https://img.shields.io/badge/Version-v2.2.136-blue.svg)
 ![Protocol](https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg)
 

@@ -9,14 +9,19 @@ SERVICE_NAME="linkproxy"
 BINARY_NAME="linkproxy-linux-amd64"
 GITHUB_REPO="LinkProxy-Core/linkproxy"
 DOWNLOAD_URL="https://github.com/${GITHUB_REPO}/releases/latest/download/linkproxy-linux-amd64.tar.gz"
-SCRIPT_VERSION="6.2.0"
-SOFTWARE_VERSION="v2.2.133"
+SCRIPT_VERSION="6.2.1"
+SOFTWARE_VERSION="v2.2.136"
 
 # Detect active working directory if already installed
+LEGACY_DIR=""
 if [ -f "/etc/systemd/system/${SERVICE_NAME}.service" ]; then
     _custom_wd=$(grep -oP '(?<=WorkingDirectory=).*' "/etc/systemd/system/${SERVICE_NAME}.service" 2>/dev/null)
     [ -n "$_custom_wd" ] && [ -d "$_custom_wd" ] && WORK_DIR="$_custom_wd"
+elif [ -f "/etc/systemd/system/minerlink-proxy.service" ]; then
+    _custom_lwd=$(grep -oP '(?<=WorkingDirectory=).*' "/etc/systemd/system/minerlink-proxy.service" 2>/dev/null)
+    [ -n "$_custom_lwd" ] && [ -d "$_custom_lwd" ] && LEGACY_DIR="$_custom_lwd"
 fi
+[ -z "$LEGACY_DIR" ] && [ -d "/root/MinerLink-Proxy" ] && LEGACY_DIR="/root/MinerLink-Proxy"
 
 # Colors
 RED='\033[0;31m'
@@ -339,6 +344,67 @@ update_proxy() {
     clear
     echo -e "${CYAN}正在检查并更新 LinkProxy 到最新版本...${NC}"
     if [ ! -f "$WORK_DIR/$BINARY_NAME" ]; then
+        if [ -n "$LEGACY_DIR" ] && [ -f "$LEGACY_DIR/MinerLink-Proxy-linux-amd64" ]; then
+            echo -e "${YELLOW}-> 检测到历史老版本 MinerLink-Proxy: ${LEGACY_DIR}${NC}"
+            echo -e "${GREEN}-> 正在自动平滑迁移数据库与配置至 LinkProxy 架构...${NC}"
+            mkdir -p "$WORK_DIR"
+            cd "$WORK_DIR" || exit 1
+            if wget -q --timeout=30 -O linkproxy-linux-amd64-new.tar.gz "$DOWNLOAD_URL"; then
+                systemctl stop minerlink-proxy >/dev/null 2>&1
+                systemctl disable minerlink-proxy >/dev/null 2>&1
+                mkdir -p "$WORK_DIR/data"
+                if [ -f "$LEGACY_DIR/data/proxy.db" ]; then
+                    cp -af "$LEGACY_DIR/data/proxy.db" "$WORK_DIR/data/proxy.db"
+                    echo -e "${GREEN}✅ 历史矿池端口与钱包配置已无损继承 (data/proxy.db)！${NC}"
+                fi
+                if [ -f "$LEGACY_DIR/miner_proxy.db" ]; then
+                    cp -af "$LEGACY_DIR/miner_proxy.db" "$WORK_DIR/miner_proxy.db"
+                    [ ! -f "$WORK_DIR/data/proxy.db" ] && cp -af "$LEGACY_DIR/miner_proxy.db" "$WORK_DIR/data/proxy.db"
+                    echo -e "${GREEN}✅ 历史矿池端口与钱包配置已无损继承 (miner_proxy.db)！${NC}"
+                fi
+                tar -zxf linkproxy-linux-amd64-new.tar.gz
+                chmod +x "$BINARY_NAME"
+                rm -f linkproxy-linux-amd64-new.tar.gz
+                old_port="10010"
+                if [ -f "/etc/systemd/system/minerlink-proxy.service" ]; then
+                    _op=$(grep -oP '(?<=-api-port\s+)[0-9]+' "/etc/systemd/system/minerlink-proxy.service" 2>/dev/null)
+                    [ -n "$_op" ] && old_port="$_op"
+                fi
+                cat > "/etc/systemd/system/${SERVICE_NAME}.service" << EOF
+[Unit]
+Description=LinkProxy High Performance Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=$WORK_DIR
+ExecStart=$WORK_DIR/$BINARY_NAME -api-port $old_port
+Restart=always
+RestartSec=3
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target
+EOF
+                systemctl daemon-reload
+                systemctl enable "$SERVICE_NAME" >/dev/null 2>&1
+                systemctl start "$SERVICE_NAME" >/dev/null 2>&1
+                cp -f "$0" /usr/local/bin/linkproxy 2>/dev/null && chmod +x /usr/local/bin/linkproxy 2>/dev/null
+                ln -sf /usr/local/bin/linkproxy /usr/bin/linkproxy 2>/dev/null
+                ln -sf /usr/local/bin/linkproxy /usr/local/bin/minerlink 2>/dev/null
+                echo -e "${BOLD}${GREEN}==============================================${NC}"
+                echo -e "${GREEN}🎉 老版本已成功平滑迁移升级至 LinkProxy 最新版！${NC}"
+                echo -e "🚀 核心已平滑重启，历史配置与全部矿机端口已无缝恢复！"
+                echo -e "${BOLD}${GREEN}==============================================${NC}"
+                pause
+                return 0
+            else
+                echo -e "${RED}❌ 下载最新更新包失败，请检查网络！${NC}"
+                pause
+                return 1
+            fi
+        fi
         echo -e "${RED}尚未检测到已安装的代理，请先执行安装！${NC}"
         pause
         return 1
