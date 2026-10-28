@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 # ==============================================================================
 # LinkProxy Management & Installation Script
 # GitHub: https://github.com/LinkProxy-Core/linkproxy
@@ -9,8 +9,8 @@ SERVICE_NAME="linkproxy"
 BINARY_NAME="linkproxy-linux-amd64"
 GITHUB_REPO="LinkProxy-Core/linkproxy"
 DOWNLOAD_URL="https://github.com/${GITHUB_REPO}/releases/latest/download/linkproxy-linux-amd64.tar.gz"
-SCRIPT_VERSION="6.2.1"
-SOFTWARE_VERSION="v2.2.139"
+SCRIPT_VERSION="6.2.2"
+SOFTWARE_VERSION="v2.2.140"
 
 # Detect active working directory if already installed
 LEGACY_DIR=""

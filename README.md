@@ -2,31 +2,39 @@
 
 高性能多币种 Stratum / EthProxy 网络中转与分流服务。
 
-![Version](https://img.shields.io/badge/Version-v2.2.136-blue.svg)
+![Version](https://img.shields.io/badge/Version-v2.2.140-blue.svg)
 ![Protocol](https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg)
 
-针对 BTC、LTC、Kaspa、ETC 等主流 ASIC 与 GPU 计算节点开发的高并发网关服务，支持多矿池分流、动态难度自适应、平滑切池与 Web 可视化管理。
+针对 BTC、LTC、Kaspa、ETC、PRL、QTC 等主流 ASIC 与 GPU/CPU 计算节点开发的高并发网关服务，支持多矿池分流、动态难度自适应、平滑切池与 Web 可视化管理。
 
 ## 主要特性
 
-- **协议深度兼容**：全面支持 BTC/BCH (SHA-256)、LTC/DOGE (Scrypt)、KAS (kHeavyHash)、ETC/ETHW 等主流币种的 Stratum 及 EthProxy 协议。
+- **协议深度兼容**：全面支持 BTC/BCH (SHA-256)、LTC (Scrypt)、KAS (kHeavyHash)、ETC/ETHW 等主流币种的 Stratum 及 EthProxy 协议，原生深度适配 **PRL (Pearlhash 珍珠币)** 与 **QTC (Quantus)** 专属协议重写与动态周期调度。
 - **平滑切池与防断连**：底层深度对齐协议状态，切池过程只同步 Extranonce 与工作难度，不触发芯片流水线清空，避免 S19/S21 等 ASIC 节点掉线或保护重启。
+- **离线防抖与智能过滤**：对标业界顶级网关架构，实现 2 分钟离线防抖观察期与待机连接静默机制，自动消除矿池闪断与网络抖动造成的日志刷屏，保持面板清爽。
 - **动态难度（Vardiff）对齐**：支持自动校准不同矿池间的下发难度，消除跨池切换造成的算力抖动与虚假算力。
 - **故障转移与容灾**：主矿池网络异常时自动执行平滑重连与故障降级，确保高网络抖动环境下的持续连接。
 - **Web 可视化面板**：内置轻量 Web 监控后台，提供节点实时算力折线图、有效/拒绝份额统计、在线状态及独立拒绝日志追溯。
 
 ## 支持币种
 
-| 币种 | 协议类型 | 算法 |
+| 币种 | 协议类型 | 算法与特性 |
 | :--- | :--- | :--- |
-| BTC / BCH | Stratum | SHA-256 |
-| LTC / DOGE | Stratum | Scrypt |
-| KAS (Kaspa) | Stratum | kHeavyHash |
-| ETC / ETHW | EthProxy | Etchash / Ethash |
-| DASH | Stratum | X11 |
-| CKB | Stratum | Eaglesong |
-| 自定义代币 | 自适应 | 兼容主流 Stratum 变体 |
+| **BTC / BCH** | Stratum | SHA-256 (ASIC 深度优化，0 芯片重启) |
+| **LTC** | Stratum | Scrypt (主池/备用池平滑切换) |
+| **PRL (珍珠币)** | Stratum | Pearlhash (原生支持，自适应双向改写) |
+| **QTC (Quantus)** | Stratum | Poseidon2-Goldilocks (Quantus 专属中转分流) |
+| **KAS (Kaspa)** | Stratum | kHeavyHash (超低延迟并行通道) |
+| **ETC / ETHW** | EthProxy / Stratum | Etchash / Ethash (Target 难度无感重写) |
+| **ZEC** | Stratum | Equihash |
+| **SC** | Stratum | Blake2b |
+| **DASH** | Stratum | X11 |
+| **CKB** | Stratum | Eaglesong |
+| **CFX** | Stratum | Octopus |
+| **ALEO** | Stratum | Aleo (ZKP 证明分流) |
+| **ALPH** | Stratum | Blake3 |
+| **自定义代币** | 自适应 | 兼容主流 Stratum 变体 |
 
 ## 安装与部署
 
