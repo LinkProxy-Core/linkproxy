@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>LinkProxy 官方用户手册 - 工业级算力路由与中转网关</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="LinkProxy 官方用户手册与功能指南，覆盖部署、端口配置、多钱包分流、加密中转隧道与高频排错。">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    :root {
+      --theme-color: #0284c7;
+      --sidebar-width: 290px;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .sidebar {
+      background-color: #f8fafc;
+      border-right: 1px solid #e2e8f0;
+    }
+    .sidebar-nav strong {
+      font-size: 13px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 15px;
+      display: inline-block;
+    }
+    .markdown-section pre>code {
+      font-family: "JetBrains Mono", Consolas, "Fira Code", monospace;
+      font-size: 13px;
+    }
+    .markdown-section table {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    .markdown-section table th, .markdown-section table td {
+      border: 1px solid #e2e8f0;
+      padding: 10px 14px;
+    }
+    .markdown-section table tr:nth-child(2n) {
+      background-color: #f8fafc;
+    }
+    .markdown-section blockquote {
+      border-left: 4px solid #38bdf8;
+      background: #f0f9ff;
+      color: #0369a1;
+      padding: 12px 16px;
+      border-radius: 0 6px 6px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">正在加载 LinkProxy 用户手册...</div>
+  <script>
+    window.$docsify = {
+      name: 'LinkProxy 官方手册',
+      repo: 'https://github.com/LinkProxy-Core/linkproxy',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      homepage: 'README.md',
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: '搜索手册内容...',
+        noData: '未找到相关结果',
+        depth: 4
+      },
+      copyCode: {
+        buttonText: '复制',
+        errorText: '错误',
+        successText: '已复制'
+      }
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-go.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-ini.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js"></script>
+</body>
+</html>
