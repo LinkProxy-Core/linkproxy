@@ -5,8 +5,28 @@
 ![Version](https://img.shields.io/badge/Version-v2.2.142-blue.svg)
 ![Protocol](https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg)
+[![Docs](https://img.shields.io/badge/Docs-在线使用手册-brightgreen.svg)](https://linkproxy-core.github.io/linkproxy/)
+
+> 📖 **官方在线使用手册**：[https://linkproxy-core.github.io/linkproxy/](https://linkproxy-core.github.io/linkproxy/)
+>
+> 涵盖服务器选型、一键极速安装、端口创建、多钱包分流 (PayList)、免配置加密中转隧道部署与常见问题排查。
 
 针对 BTC、LTC、Kaspa、ETC、PRL、QTC 等主流 ASIC 与 GPU/CPU 计算节点开发的高并发网关服务，支持多矿池分流、动态难度自适应、平滑切池与 Web 可视化管理。
+
+## 📖 在线使用手册导航
+
+详尽的操作指南与最佳实践已发布至官方文档中心，欢迎查阅：
+👉 **[点击查阅 LinkProxy 官方在线使用手册](https://linkproxy-core.github.io/linkproxy/)**
+
+- [01. 安装部署与快速上手](https://linkproxy-core.github.io/linkproxy/#/01_quickstart) —— 推荐服务器硬件选型、Linux 一键安装与终端快捷指令
+- [02. 常见组网与连接模式](https://linkproxy-core.github.io/linkproxy/#/02_architecture) —— 局域网直连代理与跨国加密中转架构方案
+- [03. 端口管理与矿池配置](https://linkproxy-core.github.io/linkproxy/#/03_ports_and_pools) —— 端口创建、协议模式推荐（SSLMIX）、主备容灾与一键克隆
+- [04. 抽水设置与多钱包分流](https://linkproxy-core.github.io/linkproxy/#/04_fee_mining) —— 基础抽水、多钱包按比例分流 (PayList) 与大客户免抽白名单
+- [05. 加密中转隧道使用教程](https://linkproxy-core.github.io/linkproxy/#/05_encrypted_tunnel) —— 单文件免配置中转客户端下载、部署与远程热重启
+- [06. 高级设置与难度微调说明](https://linkproxy-core.github.io/linkproxy/#/06_advanced_vardiff) —— 芯片兼容增强、防封保护 (AntiBan) 与难度微调控制
+- [07. 安全防护与运行日志](https://linkproxy-core.github.io/linkproxy/#/07_security_defense) —— 控制台防爆破、2分钟防抖告警与单机专有日志追踪
+- [08. 支持币种与矿机配置示例](https://linkproxy-core.github.io/linkproxy/#/08_coins_matrix) —— 15 种主流支持币种及主流矿机（蚂蚁/神马/GPU）后台填法
+- [09. 常见问题排错与运维 FAQ](https://linkproxy-core.github.io/linkproxy/#/09_faq_troubleshooting) —— 连不上排查、拒绝率偏高解决与密码快速重置方法
 
 ## 主要特性
 
