@@ -10,7 +10,23 @@ BINARY_NAME="linkproxy-linux-amd64"
 GITHUB_REPO="LinkProxy-Core/linkproxy"
 DOWNLOAD_URL="https://github.com/${GITHUB_REPO}/releases/latest/download/linkproxy-linux-amd64.tar.gz"
 SCRIPT_VERSION="6.2.2"
-SOFTWARE_VERSION="v2.2.140"
+
+# 动态探测 GitHub 最新 Release 标签，毫秒级 302 重定向解析，免除每次推送手动维护
+get_latest_release_tag() {
+    local tag=""
+    if command -v curl >/dev/null 2>&1; then
+        tag=$(curl -sI "https://github.com/${GITHUB_REPO}/releases/latest" 2>/dev/null | grep -i '^location:' | sed 's/.*tag\///' | tr -d '\r\n')
+    fi
+    if [ -z "$tag" ] && command -v wget >/dev/null 2>&1; then
+        tag=$(wget -q -S --spider "https://github.com/${GITHUB_REPO}/releases/latest" 2>&1 | grep -i 'Location:' | sed 's/.*tag\///' | tr -d '\r\n')
+    fi
+    if [[ "$tag" =~ ^v[0-9]+\.[0-9]+ ]]; then
+        echo "$tag"
+    else
+        echo "v2.2.140"
+    fi
+}
+SOFTWARE_VERSION="$(get_latest_release_tag)"
 
 # Detect active working directory if already installed
 LEGACY_DIR=""
