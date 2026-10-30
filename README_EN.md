@@ -1,11 +1,19 @@
 <div align="center">
-  <img src="images/banner.svg" alt="LinkProxy Banner" width="100%"/>
+  <a href="https://github.com/LinkProxy-Core/linkproxy">
+    <img src="images/logo.png" alt="LinkProxy Logo" width="128" height="128" />
+  </a>
 
-  <p align="center">
+  <h1>LinkProxy</h1>
+
+  <p>
     <strong>Enterprise High-Performance Multi-Coin Stratum / EthProxy Gateway &amp; Tunnel Service</strong>
   </p>
 
-  <p align="center">
+  <p>
+    High Concurrency · Zero-Latency Feemining · O(1) Duplicate Suppression · Encrypted Tunnel · Hardware-Aligned (BTC / LTC / KAS / ETC / PRL / QTC)
+  </p>
+
+  <p>
     <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.144-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-Online%20Manual-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">

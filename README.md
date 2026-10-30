@@ -1,11 +1,19 @@
 <div align="center">
-  <img src="images/banner.svg" alt="LinkProxy Banner" width="100%"/>
+  <a href="https://github.com/LinkProxy-Core/linkproxy">
+    <img src="images/logo.png" alt="LinkProxy Logo" width="128" height="128" />
+  </a>
 
-  <p align="center">
+  <h1>LinkProxy</h1>
+
+  <p>
     <strong>企业级高性能多币种 Stratum / EthProxy 网络分流与加密中转服务</strong>
   </p>
 
-  <p align="center">
+  <p>
+    万台高并发 · 零漏报转发 · 毫秒级防抖 · 混淆加密中转 · 深度硬件兼容 (BTC / LTC / KAS / ETC / PRL / QTC)
+  </p>
+
+  <p>
     <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.144-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-%E5%AE%98%E6%96%B9%E5%9C%A8%E7%BA%BF%E6%89%8B%E5%86%8C-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
