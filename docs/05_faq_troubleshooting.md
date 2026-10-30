@@ -29,19 +29,27 @@
 
 ### Q3: 忘记了 Web 控制台的管理员密码如何重置？
 
-LinkProxy 提供了一键重置指令，无需停止服务或翻查数据库：
+LinkProxy 的账户信息保存在本地 SQLite 数据库中，可通过以下两种方式重置：
 
+**方式一：使用终端快捷管理菜单（推荐）**
 ```bash
 # 执行终端快捷指令
 linkproxy
-# 选择菜单选项 [6] 密码重置
+# 选择菜单选项 [9] 重置面板端口与登录状态
 ```
 
-或直接执行单行重置命令：
+**方式二：通过 SQLite 直接重置为默认 admin/admin**
 ```bash
-/root/linkproxy/linkproxy -reset-password admin
+# 停止代理服务
+sudo systemctl stop linkproxy
+
+# 重置管理员账密为 admin / admin
+sqlite3 /root/linkproxy/data/proxy.db "UPDATE global_configs SET admin_account='admin', admin_password='admin';"
+
+# 重新启动服务
+sudo systemctl start linkproxy
 ```
-密码将立即重置为 `admin`，重新登录后请尽快修改。
+重新登录后台后，请立即进入系统设置更新密码。
 
 ---
 

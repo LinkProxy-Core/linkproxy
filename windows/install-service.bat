@@ -30,7 +30,7 @@ echo 目标可执行文件: %EXE_PATH%
 echo 正在创建系统级开机自启计划任务 (%TASK_NAME%)...
 
 schtasks /delete /tn "%TASK_NAME%" /f >nul 2>&1
-schtasks /create /tn "%TASK_NAME%" /tr "\"%EXE_PATH%\"" /sc onstart /ru "SYSTEM" /rl HIGHEST /f
+schtasks /create /tn "%TASK_NAME%" /tr "\"%EXE_PATH%\" -api-port 10010" /sc onstart /ru "SYSTEM" /rl HIGHEST /f
 
 if %errorLevel% equ 0 (
     echo.

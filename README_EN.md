@@ -9,7 +9,7 @@
     <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.144-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-Online%20Manual-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
-    <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20ARM64-lightgrey.svg?style=flat-square" alt="Platform">
+    <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg?style=flat-square" alt="Platform">
     <img src="https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square" alt="License">
     <a href="README.md"><img src="https://img.shields.io/badge/Language-%E4%B8%AD%E6%96%87-blue?style=flat-square" alt="Chinese"></a>
   </p>
@@ -32,6 +32,7 @@ LinkProxy is engineered for high-concurrency PoW mining infrastructures (BTC, LT
 - **O(1) Predictive Duplicate Share Suppression**: Intercepts duplicate or stale ASIC shares locally before they reach upstream pools.
 - **Zero-Config Encrypted Tunnel**: Bidirectional encrypted control and data channels for cross-border traffic obfuscation.
 - **3-Minute Offline Grace Cache**: Seamlessly caches cumulative shares and hashrate curves during transient network hiccups.
+- **One-Click Port Cloning**: Duplicate existing ports and their configurations in one click without re-entering parameters.
 - **Enterprise Whitelist Filter (`FilterWallet`)**: Exclude VIP mining accounts with O(1) hash table lookup.
 
 ---
@@ -49,12 +50,6 @@ curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/insta
 * Default Pass: `admin`
 * CLI Tool: Type `linkproxy` in any terminal to manage the service.
 
-### ARM64 Architecture (Raspberry Pi / Orange Pi / AWS Graviton)
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/arm-install.sh | sudo bash
-```
-
 ### Windows 64-bit
 
 Download `linkproxy-windows-amd64.zip` from [Releases](https://github.com/LinkProxy-Core/linkproxy/releases/latest):
@@ -65,14 +60,16 @@ Download `linkproxy-windows-amd64.zip` from [Releases](https://github.com/LinkPr
 
 ## 🛠️ Repository Ecosystem
 
-* **Templates**:
-  * [excel端口导入模板.xlsx](excel端口导入模板.xlsx) - Batch port import workbook
-  * [templates/ports.example.json](templates/ports.example.json) - JSON port configuration sample
-  * [origin.json](origin.json) - Base configuration file
 * **Scripts**:
   * [scripts/sysctl-tune.sh](scripts/sysctl-tune.sh) - Linux kernel & TCP BBR tuning for 10k miners
   * [scripts/check-ports.sh](scripts/check-ports.sh) - Port & pool latency testing tool
-  * [scripts/clean-logs.sh](scripts/clean-logs.sh) - Log cleanup and compression
+* **Linux Daemon**:
+  * [linux/linkproxy.service](linux/linkproxy.service) - Production Systemd unit file
+  * [linux/update.sh](linux/update.sh) - Standalone hot upgrade and auto-rollback script
+* **Windows Suite**:
+  * [windows/start.bat](windows/start.bat) - Interactive launcher
+  * [windows/install-service.bat](windows/install-service.bat) - Background service installer
+  * [windows/uninstall-service.bat](windows/uninstall-service.bat) - Service uninstaller
 * **Guides**:
   * [docs/01_quickstart.md](docs/01_quickstart.md) - Quickstart Guide
   * [docs/02_linux_tuning.md](docs/02_linux_tuning.md) - High Concurrency Linux Kernel Tuning
