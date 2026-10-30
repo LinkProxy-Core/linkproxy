@@ -141,5 +141,5 @@ curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/insta
 
 ## 💬 交流与社区支持
 
-* **Telegram 官方交流群**：[点击加入 Telegram 群组](https://t.me/+c7GZIMR-k0I5NWQx)
+* **Telegram 官方交流群**：[点击加入 Telegram 群组](https://t.me/+fKG-u6OEDexlMDIx)
 * **官方在线手册**：[https://linkproxy-core.github.io/linkproxy/](https://linkproxy-core.github.io/linkproxy/)
