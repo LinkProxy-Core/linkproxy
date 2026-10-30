@@ -1,102 +1,130 @@
-# LinkProxy
+<div align="center">
+  <img src="images/banner.svg" alt="LinkProxy Banner" width="100%"/>
 
-高性能多币种 Stratum / EthProxy 网络中转与分流服务。
+  <p align="center">
+    <strong>企业级高性能多币种 Stratum / EthProxy 网络分流与加密中转服务</strong>
+  </p>
 
-![Version](https://img.shields.io/badge/Version-v2.2.144-blue.svg)
-![Protocol](https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg)
-![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg)
-[![Docs](https://img.shields.io/badge/Docs-在线使用手册-brightgreen.svg)](https://linkproxy-core.github.io/linkproxy/)
+  <p align="center">
+    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.144-blue.svg?style=flat-square" alt="Version"></a>
+    <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-%E5%AE%98%E6%96%B9%E5%9C%A8%E7%BA%BF%E6%89%8B%E5%86%8C-brightgreen.svg?style=flat-square" alt="Docs"></a>
+    <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
+    <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20ARM64-lightgrey.svg?style=flat-square" alt="Platform">
+    <img src="https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square" alt="License">
+    <a href="README_EN.md"><img src="https://img.shields.io/badge/Language-English-blue?style=flat-square" alt="English"></a>
+  </p>
+</div>
 
-> 📖 **官方在线使用手册**：[https://linkproxy-core.github.io/linkproxy/](https://linkproxy-core.github.io/linkproxy/)
->
-> 涵盖服务器选型、一键极速安装、端口创建、多钱包分流 (PayList)、免配置加密中转隧道部署与常见问题排查。
+---
 
-针对 BTC、LTC、Kaspa、ETC、PRL、QTC 等主流 ASIC 与 GPU/CPU 计算节点开发的高并发网关服务，支持多矿池分流、动态难度自适应、平滑切池与 Web 可视化管理。
+## 🚀 系统架构与核心特性
 
-## 📖 在线使用手册导航
+LinkProxy 针对 BTC、LTC、Kaspa、ETC、PRL、QTC 等主流 ASIC 算力芯片与 GPU/CPU 计算集群开发，深度对齐底层 Stratum 协议会话生命周期与硬件状态机，提供高并发网关服务、动态难度自适应、零算力损失平滑分流与 Web 可视化管理。
 
-详尽的操作指南与最佳实践已发布至官方文档中心，欢迎查阅：
-👉 **[点击查阅 LinkProxy 官方在线使用手册](https://linkproxy-core.github.io/linkproxy/)**
+<div align="center">
+  <img src="images/architecture.svg" alt="LinkProxy Architecture" width="100%"/>
+</div>
 
-- [01. 安装部署与快速上手](https://linkproxy-core.github.io/linkproxy/#/01_quickstart) —— 推荐服务器硬件选型、Linux 一键安装与终端快捷指令
-- [02. 常见组网与连接模式](https://linkproxy-core.github.io/linkproxy/#/02_architecture) —— 局域网直连代理与跨国加密中转架构方案
-- [03. 端口管理与矿池配置](https://linkproxy-core.github.io/linkproxy/#/03_ports_and_pools) —— 端口创建、协议模式推荐（SSLMIX）、主备容灾与一键克隆
-- [04. 抽水设置与多钱包分流](https://linkproxy-core.github.io/linkproxy/#/04_fee_mining) —— 基础抽水、多钱包按比例分流 (PayList) 与大客户免抽白名单
-- [05. 加密中转隧道使用教程](https://linkproxy-core.github.io/linkproxy/#/05_encrypted_tunnel) —— 单文件免配置中转客户端下载、部署与远程热重启
-- [06. 高级设置与难度微调说明](https://linkproxy-core.github.io/linkproxy/#/06_advanced_vardiff) —— 芯片兼容增强、防封保护 (AntiBan) 与难度微调控制
-- [07. 安全防护与运行日志](https://linkproxy-core.github.io/linkproxy/#/07_security_defense) —— 控制台防爆破、2分钟防抖告警与单机专有日志追踪
-- [08. 支持币种与矿机配置示例](https://linkproxy-core.github.io/linkproxy/#/08_coins_matrix) —— 15 种主流支持币种及主流矿机（蚂蚁/神马/GPU）后台填法
-- [09. 常见问题排错与运维 FAQ](https://linkproxy-core.github.io/linkproxy/#/09_faq_troubleshooting) —— 连不上排查、拒绝率偏高解决与密码快速重置方法
+### 核心优势
 
-## 主要特性
+- **严格 1:1 Stratum 会话纪律**：拒绝粗暴的多矿机复用上游连接，彻底杜绝 Extranonce 碰撞、芯片寄存器溢出与矿池拒绝率激增。
+- **平滑切池无感分流**：基于逆向对齐的标准 10ms 步进同步机制，矿机在分流切换期间 **0 算力抖动、0 芯片重启、0 假死**。
+- **O(1) 预判式重复份额拦截**：集成滑动窗口去重过滤引擎，在本地毫秒级截获并过滤无效/重复份额，保护矿机免遭矿池拉黑。
+- **免配置加密中转隧道**：自带全景监控的双向控制信道与长连接管理引擎，支持客户端一键远程热重启与加密数据管道穿越。
+- **3 分钟优雅离线防抖**：矿池瞬断或网络波动时，3 分钟内重连无缝迁移累积有效份额与历史折线图，杜绝僵尸矿机与频繁误报警。
+- **大客户免抽水白名单**：支持精确至子账户/钱包的 O(1) 免抽白名单分流。
+- **端口批量管理**：配套专属 [excel端口导入模板.xlsx](excel端口导入模板.xlsx) 与参数克隆，大矿场秒级批量上线。
 
-- **协议深度兼容**：全面支持 BTC/BCH (SHA-256)、LTC (Scrypt)、KAS (kHeavyHash)、ETC/ETHW 等主流币种的 Stratum 及 EthProxy 协议，原生深度适配 **PRL (Pearlhash 珍珠币)** 与 **QTC (Quantus)** 专属协议重写与动态周期调度。
-- **加密隧道全景监控**：引入独立双向控制信道与长连接管理引擎，面板实时呈现所有加密客户端机器名、挂载活跃矿机数与传输状态，支持服务端一键远程安全热重启与管道管理。
-- **平滑切池与防断连**：底层深度对齐协议状态，避免 S19/S21 等 ASIC 节点掉线或保护重启。
-- **离线防抖与智能过滤**：消除矿池闪断与网络抖动造成的日志刷屏，保持面板清爽。
-- **端口参数一键克隆**：管理面板支持现有代理端口参数一键深拷贝，无需重复填写目标矿池、备用矿池与复杂高级参数，秒级微调并派生新端口。
-- **动态难度（Vardiff）对齐**：支持自动校准不同矿池间的下发难度，消除算力抖动与虚假算力。
-- **故障转移与容灾**：主矿池网络异常时自动执行平滑重连与故障降级，确保高网络抖动环境下的持续连接。
-- **Web 可视化面板**：内置轻量 Web 监控后台，提供节点实时算力折线图、有效/拒绝份额统计、在线状态及独立拒绝日志追溯。
+---
 
-## 支持币种
+## 📚 深度技术文档与运维手册
 
-| 币种 | 协议类型 | 算法与特性 |
+| 章节 | 文档说明 | 重点关注内容 |
 | :--- | :--- | :--- |
-| **BTC / BCH** | Stratum | SHA-256 (ASIC 深度优化，0 芯片重启) |
-| **LTC** | Stratum | Scrypt (主池/备用池平滑切换) |
-| **PRL (珍珠币)** | Stratum | Pearlhash (原生支持，自适应双向改写) |
-| **QTC (Quantus)** | Stratum | Poseidon2-Goldilocks (Quantus 专属中转分流) |
-| **KAS (Kaspa)** | Stratum | kHeavyHash (超低延迟并行通道) |
-| **ETC / ETHW** | EthProxy / Stratum | Etchash / Ethash (Target 难度无感重写) |
-| **ZEC** | Stratum | Equihash |
-| **SC** | Stratum | Blake2b |
-| **DASH** | Stratum | X11 |
-| **CKB** | Stratum | Eaglesong |
-| **CFX** | Stratum | Octopus |
-| **ALEO** | Stratum | Aleo (ZKP 证明分流) |
-| **ALPH** | Stratum | Blake3 |
-| **自定义代币** | 自适应 | 兼容主流 Stratum 变体 |
+| **[01. 快速上手指南](docs/01_quickstart.md)** | 安装部署与初始化 | 推荐硬件规格、Linux/Windows 部署、默认管理凭据 |
+| **[02. 高并发系统调优](docs/02_linux_tuning.md)** | 万台矿机高并发参数手册 | 解除句柄限制 (1048576)、TCP 网络栈调优、BBR 拥塞控制 |
+| **[03. 币种与矿池矩阵](docs/03_coins_and_pools.md)** | 15+ 种主流币种对接实践 | BTC/LTC/KAS/ETC/PRL/QTC 推荐端口与主备容灾模式 |
+| **[04. 安全防护与生产加固](docs/04_security_defense.md)** | 防御加固与加密隧道 | 后台防爆破、IP 白名单、加密中转隧道、大客户免抽白名单 |
+| **[05. 故障排查手册 (FAQ)](docs/05_faq_troubleshooting.md)** | 常见问题自检与排查 | 连不上排查、拒绝率偏高分析、一键重置管理员密码 |
 
-## 安装与部署
+> 📖 **官方在线完整手册**：[https://linkproxy-core.github.io/linkproxy/](https://linkproxy-core.github.io/linkproxy/)
 
-### 方式一：Linux 一键安装（推荐）
+---
 
-支持 Ubuntu / Debian / CentOS / Rocky 等主流 64 位 Linux 发行版，内置 systemd 守护进程与开机自启：
+## 📦 极速安装与部署
+
+### 1. Linux 一键安装（推荐，支持 Ubuntu / Debian / CentOS / Rocky）
 
 ```bash
 curl -fsSL https://github.com/LinkProxy-Core/linkproxy/releases/latest/download/install.sh | sudo bash
 ```
 
 安装完成后，在浏览器访问后台面板：
-`http://服务器IP:10010/ui/`
+* **控制台入口**：`http://您的服务器IP:10010/ui/`
+* **初始账号**：`admin`
+* **初始密码**：`admin`
+* **终端快捷指令**：任意终端输入 `linkproxy` 唤出交互式管理菜单。
 
-* 初始账号：`admin`
-* 初始密码：`admin`
-* 首次登录后请立即进入系统设置修改密码。
+### 2. ARM64 / 树莓派 / 香橙派一键安装
 
-### 方式二：手动下载运行
+```bash
+curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/arm-install.sh | sudo bash
+```
 
-前往 [Releases 页面](https://github.com/LinkProxy-Core/linkproxy/releases/latest) 下载编译好的成品包：
+### 3. International English Installation
 
-* **Linux 64 位**：下载 `linkproxy-linux-amd64.tar.gz`，解压后运行 `./linkproxy-linux-amd64`。
-* **Windows 64 位**：下载 `linkproxy-windows-amd64.zip`，解压后直接双击运行。
+```bash
+curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/install_en.sh | sudo bash
+```
 
-运行后，计算设备直接指向服务器对应代理端口即可。
+### 4. Windows 64 位运行
 
-## 矿场网关与透明分流方案
+前往 [Releases 页面](https://github.com/LinkProxy-Core/linkproxy/releases/latest) 下载 `linkproxy-windows-amd64.zip`：
+1. 解压后双击 [windows/start.bat](windows/start.bat) 即可前台启动控制台。
+2. 生产环境建议右键管理员执行 [windows/install-service.bat](windows/install-service.bat)，一键注册为后台静默开机自启服务。
 
-针对具备矿场路由器或局域网网关管理权限的运维团队，支持通过网关级流量重定向实现全场无感平滑分流，无需逐台修改配置。有此需求可联系我们定制方案。
+---
 
-## 开发者费率 (DevFee)
+## 🛠️ 仓库生态与实用工具导航
 
-* 所有币种：0.2%
-* 个人用户：0%
+* **批量导入模板**：
+  * [excel端口导入模板.xlsx](excel端口导入模板.xlsx) —— 矿场级端口批量规划与导入表格
+  * [templates/ports.example.json](templates/ports.example.json) —— JSON 格式端口配置样例
+  * [origin.json](origin.json) —— 系统标准基础配置模板
+* **运维脚本库 (`scripts/`)**：
+  * [scripts/sysctl-tune.sh](scripts/sysctl-tune.sh) —— 一键配置万台矿机高并发 Linux 内核网络栈与 BBR
+  * [scripts/check-ports.sh](scripts/check-ports.sh) —— 本地与远程矿池端口连通性及延迟自检
+  * [scripts/clean-logs.sh](scripts/clean-logs.sh) —— 日志定时清理与 Gzip 归档
+* **服务配置模版**：
+  * [linux/linkproxy.service](linux/linkproxy.service) —— 标准 Systemd 服务单元
+  * [linux/update.sh](linux/update.sh) —— 独立平滑热升级与自动回滚脚本
 
-我们承诺：透明公开，无任何暗扣或阶梯套路。您使用本软件即代表认可此规则。感谢您对优质工具的支持！
+---
 
-## 交流与反馈
+## ⛏️ 支持币种与算法
 
-Telegram 交流群：https://t.me/+c7GZIMR-k0I5NWQx
+| 币种 | 协议类型 | 算法与特性 | 兼容设备 |
+| :--- | :--- | :--- | :--- |
+| **BTC / BCH** | Stratum V1 | SHA-256 (ASIC 深度优化，0 芯片重启) | 蚂蚁 S19/S21、神马 M30/M50、阿瓦隆 |
+| **LTC / DOGE** | Stratum V1 | Scrypt (主池/备用池平滑切换) | 蚂蚁 L7/L9、金贝系列 |
+| **KAS (Kaspa)** | Stratum | kHeavyHash (超低延迟并行通道) | 冰壳 KS3/KS5、蚂蚁 KS19 |
+| **ETC / ETHW** | EthProxy | Etchash / Ethash (8字节 Nonce 原生保护) | GPU 显卡矿机、茉莉/菠萝 ASIC |
+| **PRL (珍珠币)** | Stratum | Pearlhash (原生支持，自适应双向改写) | 全系列 Pearlhash 计算节点 |
+| **QTC (Quantus)** | Stratum | Poseidon2-Goldilocks (Quantus 专属中转分流) | Quantus GPU / CPU 算力节点 |
+| **ZEC / DASH** | Stratum | Equihash / X11 | 蚂蚁 Z15 / D7 / D9 |
+| **CKB / ALEO** | Stratum | Eaglesong / ZKP Proof | 蚂蚁 K7 / GPU 集群 |
 
-<img width="120" height="120" alt="TG交流群二维码" src="https://github.com/user-attachments/assets/cbb14cde-639d-4374-ab89-c508f70179e9" />
+---
+
+## 🔒 商业级费率标准
+
+* **所有币种**：0.2%
+* **个人用户**：0%
+* 承诺：全网公开透明，绝无任何隐蔽暗扣或恶性阶梯收费。
+
+---
+
+## 💬 交流与社区支持
+
+* **Telegram 官方交流群**：[点击加入 Telegram 群组](https://t.me/+c7GZIMR-k0I5NWQx)
+* **官方在线手册**：[https://linkproxy-core.github.io/linkproxy/](https://linkproxy-core.github.io/linkproxy/)

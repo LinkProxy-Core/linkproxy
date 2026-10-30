@@ -1,0 +1,37 @@
+{
+  "server": {
+    "listen_ip": "0.0.0.0",
+    "web_port": 10010,
+    "web_prefix": "/ui/",
+    "jwt_secret": "linkproxy_change_this_secret_in_production",
+    "log_level": "info",
+    "enable_detailed_log": false,
+    "session_timeout_minutes": 1440
+  },
+  "network": {
+    "tcp_nodelay": true,
+    "tcp_keepalive_seconds": 30,
+    "dial_timeout_seconds": 10,
+    "offline_grace_seconds": 180,
+    "recent_share_window_seconds": 60
+  },
+  "security": {
+    "enable_ip_whitelist": false,
+    "ip_whitelist": [
+      "127.0.0.1",
+      "192.168.0.0/16",
+      "10.0.0.0/8"
+    ],
+    "enable_login_rate_limit": true,
+    "max_login_attempts": 5,
+    "lockout_duration_minutes": 15
+  },
+  "telegram_notify": {
+    "enabled": false,
+    "bot_token": "",
+    "chat_id": "",
+    "notify_on_worker_offline": true,
+    "notify_on_hashrate_drop": true,
+    "drop_percentage_threshold": 30
+  }
+}

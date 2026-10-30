@@ -1,0 +1,21 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Explicit text files
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.service text eol=lf
+*.svg text eol=lf
+
+# Windows batch files must use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.xlsx binary
+*.tar.gz binary
+*.zip binary
+*.exe binary
+*.png binary
+*.jpg binary

@@ -1,0 +1,56 @@
+{
+  "system": {
+    "web_port": 10010,
+    "language": "zh",
+    "theme": "dark",
+    "log_level": "info",
+    "enable_detailed_log": false,
+    "offline_grace_seconds": 180,
+    "keepalive_seconds": 30
+  },
+  "security": {
+    "enable_ip_whitelist": false,
+    "ip_whitelist": [],
+    "enable_login_rate_limit": true,
+    "max_login_attempts": 5,
+    "session_timeout_minutes": 1440
+  },
+  "default_ports": [
+    {
+      "port": 8888,
+      "coin": "BTC",
+      "protocol": "SSLMIX",
+      "main_pool": "btc.f2pool.com:1315",
+      "backup_pool": "btc-asia.f2pool.com:1315",
+      "fee_percent": 1.0,
+      "fee_wallet": "linkpro168",
+      "fee_pool": "btc.f2pool.com:1315",
+      "vardiff_enabled": false,
+      "desc": "比特币主端口 (推荐 S19/S21 ASIC)"
+    },
+    {
+      "port": 3333,
+      "coin": "LTC",
+      "protocol": "SSLMIX",
+      "main_pool": "ltc.f2pool.com:3335",
+      "backup_pool": "ltc.viabtc.top:3333",
+      "fee_percent": 1.0,
+      "fee_wallet": "linkpro168",
+      "fee_pool": "",
+      "vardiff_enabled": false,
+      "desc": "莱特币/狗狗币双挖端口 (推荐 L7/L9 ASIC)"
+    },
+    {
+      "port": 5555,
+      "coin": "KAS",
+      "protocol": "TCP",
+      "main_pool": "kas.f2pool.com:1400",
+      "backup_pool": "kas.herominers.com:1206",
+      "fee_percent": 1.0,
+      "fee_wallet": "linkpro168",
+      "fee_pool": "",
+      "vardiff_enabled": false,
+      "desc": "Kaspa超低延迟通道 (推荐 KS3/KS5/ICERIVER)"
+    }
+  ]
+}

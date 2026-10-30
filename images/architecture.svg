@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="box-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="core-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A" />
+      <stop offset="100%" stop-color="#0E7490" />
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#06B6D4" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="420" fill="#0B0F17" rx="12" />
+
+  <!-- Section 1: Miners -->
+  <g transform="translate(40, 50)">
+    <rect width="220" height="320" rx="10" fill="url(#box-grad)" stroke="#334155" stroke-width="1.5" />
+    <text x="110" y="40" font-family="-apple-system, sans-serif" font-size="18" font-weight="bold" fill="#F8FAFC" text-anchor="middle">下游矿机 / 矿场集群</text>
+    
+    <rect x="25" y="65" width="170" height="50" rx="6" fill="#111827" stroke="#475569" stroke-width="1" />
+    <text x="110" y="96" font-family="monospace" font-size="14" fill="#38BDF8" text-anchor="middle">ASIC (S19/S21/L7/KS5)</text>
+
+    <rect x="25" y="130" width="170" height="50" rx="6" fill="#111827" stroke="#475569" stroke-width="1" />
+    <text x="110" y="161" font-family="monospace" font-size="14" fill="#38BDF8" text-anchor="middle">GPU / CPU 集群 (ETC/QTC)</text>
+
+    <rect x="25" y="195" width="170" height="50" rx="6" fill="#111827" stroke="#475569" stroke-width="1" />
+    <text x="110" y="226" font-family="monospace" font-size="14" fill="#38BDF8" text-anchor="middle">内网加密客户端 (Tunnel)</text>
+
+    <text x="110" y="290" font-family="-apple-system, sans-serif" font-size="13" fill="#64748B" text-anchor="middle">支持 SSLMIX / TCP / SSL</text>
+  </g>
+
+  <!-- Flow Arrows 1 -->
+  <line x1="260" y1="210" x2="380" y2="210" stroke="#06B6D4" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <text x="320" y="195" font-family="monospace" font-size="12" fill="#06B6D4" text-anchor="middle">毫秒级握手</text>
+
+  <!-- Section 2: LinkProxy Core Gateway -->
+  <g transform="translate(380, 40)">
+    <rect width="250" height="340" rx="10" fill="url(#core-grad)" stroke="#06B6D4" stroke-width="2" />
+    <text x="125" y="42" font-family="-apple-system, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">LinkProxy 核心网关</text>
+
+    <rect x="25" y="65" width="200" height="42" rx="6" fill="#0F172A" stroke="#0284C7" stroke-width="1" />
+    <text x="125" y="91" font-family="-apple-system, sans-serif" font-size="13" fill="#E2E8F0" text-anchor="middle">1:1 Stratum 会话生命周期</text>
+
+    <rect x="25" y="120" width="200" height="42" rx="6" fill="#0F172A" stroke="#0284C7" stroke-width="1" />
+    <text x="125" y="146" font-family="-apple-system, sans-serif" font-size="13" fill="#E2E8F0" text-anchor="middle">低延迟无感平滑分流引擎</text>
+
+    <rect x="25" y="175" width="200" height="42" rx="6" fill="#0F172A" stroke="#0284C7" stroke-width="1" />
+    <text x="125" y="201" font-family="-apple-system, sans-serif" font-size="13" fill="#E2E8F0" text-anchor="middle">O(1) 滑动窗口去重拦截</text>
+
+    <rect x="25" y="230" width="200" height="42" rx="6" fill="#0F172A" stroke="#0284C7" stroke-width="1" />
+    <text x="125" y="256" font-family="-apple-system, sans-serif" font-size="13" fill="#E2E8F0" text-anchor="middle">动态难度自适应 (Vardiff)</text>
+
+    <rect x="25" y="285" width="200" height="42" rx="6" fill="#0F172A" stroke="#0284C7" stroke-width="1" />
+    <text x="125" y="311" font-family="-apple-system, sans-serif" font-size="13" fill="#38BDF8" text-anchor="middle">3分钟离线优雅防抖缓存</text>
+  </g>
+
+  <!-- Flow Arrows 2 -->
+  <line x1="630" y1="210" x2="740" y2="210" stroke="#10B981" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow)" />
+  <text x="685" y="195" font-family="monospace" font-size="12" fill="#10B981" text-anchor="middle">直连分流</text>
+
+  <!-- Section 3: Upstream Mining Pools -->
+  <g transform="translate(740, 50)">
+    <rect width="220" height="320" rx="10" fill="url(#box-grad)" stroke="#334155" stroke-width="1.5" />
+    <text x="110" y="40" font-family="-apple-system, sans-serif" font-size="18" font-weight="bold" fill="#F8FAFC" text-anchor="middle">上游目标矿池</text>
+
+    <rect x="25" y="65" width="170" height="60" rx="6" fill="#111827" stroke="#10B981" stroke-width="1" />
+    <text x="110" y="93" font-family="-apple-system, sans-serif" font-size="14" font-weight="bold" fill="#10B981" text-anchor="middle">主目标矿池</text>
+    <text x="110" y="112" font-family="monospace" font-size="12" fill="#94A3B8" text-anchor="middle">F2Pool / AntPool / EMCD</text>
+
+    <rect x="25" y="145" width="170" height="60" rx="6" fill="#111827" stroke="#F59E0B" stroke-width="1" />
+    <text x="110" y="173" font-family="-apple-system, sans-serif" font-size="14" font-weight="bold" fill="#F59E0B" text-anchor="middle">备用容灾矿池</text>
+    <text x="110" y="192" font-family="monospace" font-size="12" fill="#94A3B8" text-anchor="middle">故障秒级平滑降级</text>
+
+    <rect x="25" y="225" width="170" height="60" rx="6" fill="#111827" stroke="#8B5CF6" stroke-width="1" />
+    <text x="110" y="253" font-family="-apple-system, sans-serif" font-size="14" font-weight="bold" fill="#8B5CF6" text-anchor="middle">分流目标钱包/矿池</text>
+    <text x="110" y="272" font-family="monospace" font-size="12" fill="#94A3B8" text-anchor="middle">支持多钱包按比例分流</text>
+  </g>
+</svg>

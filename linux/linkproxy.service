@@ -1,0 +1,23 @@
+[Unit]
+Description=LinkProxy Stratum / EthProxy High Performance Mining Gateway
+Documentation=https://linkproxy-core.github.io/linkproxy/
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/linkproxy
+ExecStart=/root/linkproxy/linkproxy-linux-amd64
+Restart=always
+RestartSec=3
+LimitNOFILE=1048576
+LimitNPROC=524288
+StandardOutput=journal
+StandardError=journal
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target
