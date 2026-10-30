@@ -43,6 +43,18 @@ LinkProxy is engineered for high-concurrency PoW mining infrastructures (BTC, LT
 - **One-Click Port Cloning**: Duplicate existing ports and their configurations in one click without re-entering parameters.
 - **Enterprise Whitelist Filter (`FilterWallet`)**: Exclude VIP mining accounts with O(1) hash table lookup.
 
+### 💡 Why Choose LinkProxy? (Comparison with Legacy Proxies)
+
+| Dimension | Legacy Proxy (e.g. FXMinerProxy / Early Clones) | LinkProxy Enterprise Gateway |
+| :--- | :--- | :--- |
+| **Session Discipline** | Dirty multiplexing over single Stratum connection; causes Extranonce collisions | **Strict 1:1 Stratum session mapping** per physical miner |
+| **Fee Switching & Stability** | Crude `clean_jobs` forced injection; resets Antminer S19/S21 hashboards | **10ms pacing synchronization**; **0 chip resets, 0 hashrate dips** |
+| **Duplicate Share Pre-filtering** | No local interception; triggers pool rejections and bans | **O(1) sliding window tracker (`RecentShareTracker`)** local filtering |
+| **Network Flapping Grace** | Instant offline marking and graph reset; noisy false alarms | **3-minute grace cache**; smooth reconnect preserves lifetime stats |
+| **Encrypted Tunneling** | Requires third-party software; complex configuration | **Native zero-config TLS/AES-GCM tunnel** with live monitoring |
+| **Fee Transparency** | Hidden dark fees / progressive cuts up to 1%~3% | **Flat 0.2% fee**, free for personal miners, 100% transparent |
+| **New Coin Support** | Limited to legacy PoW; fails on modern dynamic algorithms | Native support for **PRL (Pearlhash)**, **QTC (Quantus)**, **Kaspa**, etc. |
+
 ---
 
 ## 📦 Quick Installation
