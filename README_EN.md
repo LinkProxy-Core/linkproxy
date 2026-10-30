@@ -25,7 +25,7 @@
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
     <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg?style=flat-square" alt="Platform">
     <img src="https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square" alt="License">
-    <a href="https://t.me/+c7GZIMR-k0I5NWQx"><img src="https://img.shields.io/badge/Telegram-Community-2CA5E0?logo=telegram&logoColor=white&style=flat-square" alt="Telegram"></a>
+    <a href="https://t.me/+fKG-u6OEDexlMDIx"><img src="https://img.shields.io/badge/Telegram-Community-2CA5E0?logo=telegram&logoColor=white&style=flat-square" alt="Telegram"></a>
   </p>
 </div>
 
@@ -57,7 +57,7 @@ LinkProxy is an enterprise-grade PoW mining gateway engineered for large-scale m
 
 ## 💡 Why LinkProxy? (Comparison with Legacy Proxies)
 
-| Dimension | Legacy Proxies (e.g. FXMinerProxy / Early Clones) | LinkProxy Enterprise Gateway |
+| Dimension | Legacy Proxies (minerProxy / Early Clones) | LinkProxy Enterprise Gateway |
 | :--- | :--- | :--- |
 | **Session Discipline** | Dirty multiplexing over a single Stratum socket; causes Extranonce collisions | **Strict 1:1 Stratum session mapping** per physical miner |
 | **Fee Switching & Stability** | Crude `clean_jobs: true` injection; causes Antminer S19/S21 hashboard resets | **10ms pacing synchronization**; **0 chip resets, 0 hashrate drops** |
@@ -140,7 +140,7 @@ Comprehensive guides are available at the **[LinkProxy Online Documentation Manu
 
 ## Community & Support
 
-- **Telegram Group**: [https://t.me/+c7GZIMR-k0I5NWQx](https://t.me/+c7GZIMR-k0I5NWQx)
+- **Telegram Group**: [https://t.me/+fKG-u6OEDexlMDIx](https://t.me/+fKG-u6OEDexlMDIx)
 - **Online Documentation**: [https://linkproxy-core.github.io/linkproxy/#/en/](https://linkproxy-core.github.io/linkproxy/#/en/)
 - **Bug Reports & Feedback**: Please submit via GitHub Issues.
 
