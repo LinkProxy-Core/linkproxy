@@ -45,7 +45,7 @@ LinkProxy 针对 BTC、LTC、Kaspa、ETC、PRL、QTC 等主流 ASIC 算力芯片
 
 ### 💡 为什么选择 LinkProxy？（对标传统代理）
 
-针对传统矿机中转软件（如 FXMinerProxy、RustMinerSystem 等）在实机运维中的历史硬伤，LinkProxy 进行了底层重构：
+针对传统矿机中转软件在实机运维中的历史硬伤，LinkProxy 进行了底层重构：
 
 | 对比维度 | 传统中转软件 (如 FXMinerProxy / 早期代理) | LinkProxy 企业级网关 |
 | :--- | :--- | :--- |
