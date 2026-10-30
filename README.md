@@ -13,6 +13,16 @@
     万台高并发 · 零漏报转发 · 毫秒级防抖 · 混淆加密中转 · 深度硬件兼容 (BTC / LTC / KAS / ETC / PRL / QTC)
   </p>
 
+  <p align="center">
+    <strong>简体中文</strong>
+    ·
+    <a href="README_EN.md">English</a>
+    ·
+    <a href="https://linkproxy-core.github.io/linkproxy/">在线手册 (中文)</a>
+    ·
+    <a href="https://linkproxy-core.github.io/linkproxy/#/en/">Online Manual (EN)</a>
+  </p>
+
   <p>
     <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.144-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-%E5%AE%98%E6%96%B9%E5%9C%A8%E7%BA%BF%E6%89%8B%E5%86%8C-brightgreen.svg?style=flat-square" alt="Docs"></a>

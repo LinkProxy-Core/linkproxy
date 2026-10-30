@@ -9,47 +9,59 @@
     <strong>Enterprise High-Performance Multi-Coin Stratum / EthProxy Gateway &amp; Tunnel Service</strong>
   </p>
 
-  <p>
-    High Concurrency · Zero-Latency Feemining · O(1) Duplicate Suppression · Encrypted Tunnel · Hardware-Aligned (BTC / LTC / KAS / ETC / PRL / QTC)
+  <p align="center">
+    <a href="README.md">简体中文</a>
+    ·
+    <strong>English</strong>
+    ·
+    <a href="https://linkproxy-core.github.io/linkproxy/">在线手册 (中文)</a>
+    ·
+    <a href="https://linkproxy-core.github.io/linkproxy/#/en/">Online Manual (EN)</a>
   </p>
 
-  <p>
+  <p align="center">
     <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.144-blue.svg?style=flat-square" alt="Version"></a>
-    <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-Online%20Manual-brightgreen.svg?style=flat-square" alt="Docs"></a>
+    <a href="https://linkproxy-core.github.io/linkproxy/#/en/"><img src="https://img.shields.io/badge/Docs-Online%20Manual-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
     <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg?style=flat-square" alt="Platform">
     <img src="https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square" alt="License">
-    <a href="README.md"><img src="https://img.shields.io/badge/Language-%E4%B8%AD%E6%96%87-blue?style=flat-square" alt="Chinese"></a>
+    <a href="https://t.me/+c7GZIMR-k0I5NWQx"><img src="https://img.shields.io/badge/Telegram-Community-2CA5E0?logo=telegram&logoColor=white&style=flat-square" alt="Telegram"></a>
   </p>
 </div>
 
 ---
 
-## 🚀 Architecture & Key Features
+## What is LinkProxy
 
-LinkProxy is engineered for high-concurrency PoW mining infrastructures (BTC, LTC, Kaspa, ETC, PRL, QTC) across ASIC and GPU clusters. It maintains strict 1:1 Stratum protocol state machines, provides dynamic difficulty alignment (Vardiff), stealth low-latency fee routing, and an intuitive Web UI.
+LinkProxy is an enterprise-grade PoW mining gateway engineered for large-scale mining operations, hashrate hosting providers, and cross-border routing. It provides strict 1:1 Stratum protocol state-machine alignment, zero-latency stealth fee switching, dynamic difficulty alignment (VarDiff), encrypted tunnel transport, and a modern Web management console.
 
 <div align="center">
   <img src="images/architecture.svg" alt="LinkProxy Architecture" width="100%"/>
 </div>
 
-### Highlights
+---
 
-- **Strict 1:1 Stratum Session Discipline**: Avoids dirty Stratum multiplexing, preventing Extranonce collisions, ASIC chip register faults, and VarDiff storms.
-- **Zero-Latency Stealth Fee Switching**: Reverse-engineered 10ms pacing synchronization prevents ASIC hashboard resets (Antminer S19/S21, Whatsminer M30/M50).
-- **O(1) Predictive Duplicate Share Suppression**: Intercepts duplicate or stale ASIC shares locally before they reach upstream pools.
-- **Zero-Config Encrypted Tunnel**: Bidirectional encrypted control and data channels for cross-border traffic obfuscation.
-- **3-Minute Offline Grace Cache**: Seamlessly caches cumulative shares and hashrate curves during transient network hiccups.
-- **One-Click Port Cloning**: Duplicate existing ports and their configurations in one click without re-entering parameters.
-- **Enterprise Whitelist Filter (`FilterWallet`)**: Exclude VIP mining accounts with O(1) hash table lookup.
+## Core Capabilities
 
-### 💡 Why Choose LinkProxy? (Comparison with Legacy Proxies)
+| Capability | Description |
+| :--- | :--- |
+| **Strict 1:1 Stratum Mapping** | Maintains dedicated physical Stratum session per miner. Avoids session multiplexing, eliminating Extranonce collisions and VarDiff storms. |
+| **Zero-Latency Stealth Fee Switching** | Reverse-engineered 10ms pacing synchronization aligned with ASIC hardware state machines. **0 hashrate dips, 0 chip resets, 0 deadlocks**. |
+| **O(1) Duplicate Pre-Filtering** | Sliding window deduplication tracker (`RecentShareTracker`) intercepts duplicate/stale shares locally, protecting miners from pool bans. |
+| **3-Minute Offline Grace Cache** | Seamlessly preserves cumulative shares and hashrate curves across transient network drops and pool reconnections. |
+| **One-Click Port Cloning** | Deep-copies existing port configurations (primary/backup pools, fee rates, whitelists) to launch new ports in seconds. |
+| **VIP Zero-Fee Whitelist** | Exclude VIP client sub-accounts or test rigs with O(1) hash lookup (`FilterWallet`). |
+| **Zero-Config Encrypted Tunnel** | Bidirectional TLS/AES-GCM encrypted tunnel with stream compression reduces public bandwidth usage by 60%~75%. |
 
-| Dimension | Legacy Proxy (e.g. FXMinerProxy / Early Clones) | LinkProxy Enterprise Gateway |
+---
+
+## 💡 Why LinkProxy? (Comparison with Legacy Proxies)
+
+| Dimension | Legacy Proxies (e.g. FXMinerProxy / Early Clones) | LinkProxy Enterprise Gateway |
 | :--- | :--- | :--- |
-| **Session Discipline** | Dirty multiplexing over single Stratum connection; causes Extranonce collisions | **Strict 1:1 Stratum session mapping** per physical miner |
-| **Fee Switching & Stability** | Crude `clean_jobs` forced injection; resets Antminer S19/S21 hashboards | **10ms pacing synchronization**; **0 chip resets, 0 hashrate dips** |
-| **Duplicate Share Pre-filtering** | No local interception; triggers pool rejections and bans | **O(1) sliding window tracker (`RecentShareTracker`)** local filtering |
+| **Session Discipline** | Dirty multiplexing over a single Stratum socket; causes Extranonce collisions | **Strict 1:1 Stratum session mapping** per physical miner |
+| **Fee Switching & Stability** | Crude `clean_jobs: true` injection; causes Antminer S19/S21 hashboard resets | **10ms pacing synchronization**; **0 chip resets, 0 hashrate drops** |
+| **Duplicate Share Pre-filtering** | No local interception; forwards blindly to pool, triggering bans | **O(1) sliding window tracker (`RecentShareTracker`)** local filtering |
 | **Network Flapping Grace** | Instant offline marking and graph reset; noisy false alarms | **3-minute grace cache**; smooth reconnect preserves lifetime stats |
 | **Encrypted Tunneling** | Requires third-party software; complex configuration | **Native zero-config TLS/AES-GCM tunnel** with live monitoring |
 | **Fee Transparency** | Hidden dark fees / progressive cuts up to 1%~3% | **Flat 0.2% fee**, free for personal miners, 100% transparent |
@@ -57,49 +69,83 @@ LinkProxy is engineered for high-concurrency PoW mining infrastructures (BTC, LT
 
 ---
 
-## 📦 Quick Installation
+## Quick Start
 
-### Linux One-Click (Ubuntu / Debian / CentOS / Rocky)
+### 1. Linux One-Click (Ubuntu / Debian / CentOS / Rocky)
+
+Run the following command to download, install, and register systemd auto-start service:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/install_en.sh | sudo bash
 ```
 
-* Web Dashboard: `http://<SERVER_IP>:10010/ui/`
-* Default User: `admin`
-* Default Pass: `admin`
-* CLI Tool: Type `linkproxy` in any terminal to manage the service.
+After installation:
+- **Web Console**: `http://YOUR_SERVER_IP:10010/ui/`
+- **Default Username**: `admin`
+- **Default Password**: `admin`
+- **CLI Manager**: Type `linkproxy` in any terminal to open the management menu.
 
-### Windows 64-bit
+### 2. Windows 64-bit
 
-Download `linkproxy-windows-amd64.zip` from [Releases](https://github.com/LinkProxy-Core/linkproxy/releases/latest):
-1. Extract and run `windows/start.bat` for interactive console.
-2. Run `windows/install-service.bat` as Administrator to install background auto-start service.
-
----
-
-## 🛠️ Repository Ecosystem
-
-* **Scripts**:
-  * [scripts/sysctl-tune.sh](scripts/sysctl-tune.sh) - Linux kernel & TCP BBR tuning for 10k miners
-  * [scripts/check-ports.sh](scripts/check-ports.sh) - Port & pool latency testing tool
-* **Linux Daemon**:
-  * [linux/linkproxy.service](linux/linkproxy.service) - Production Systemd unit file
-  * [linux/update.sh](linux/update.sh) - Standalone hot upgrade and auto-rollback script
-* **Windows Suite**:
-  * [windows/start.bat](windows/start.bat) - Interactive launcher
-  * [windows/install-service.bat](windows/install-service.bat) - Background service installer
-  * [windows/uninstall-service.bat](windows/uninstall-service.bat) - Service uninstaller
-* **Guides**:
-  * [docs/01_quickstart.md](docs/01_quickstart.md) - Quickstart Guide
-  * [docs/02_linux_tuning.md](docs/02_linux_tuning.md) - High Concurrency Linux Kernel Tuning
-  * [docs/03_coins_and_pools.md](docs/03_coins_and_pools.md) - Supported Coins & Pool Setup
-  * [docs/04_security_defense.md](docs/04_security_defense.md) - Security Hardening & Defense
-  * [docs/05_faq_troubleshooting.md](docs/05_faq_troubleshooting.md) - Troubleshooting FAQ
+1. Download `linkproxy-windows-amd64.zip` from [Releases](https://github.com/LinkProxy-Core/linkproxy/releases/latest).
+2. Extract the archive (e.g. to `D:\LinkProxy`).
+3. Run `start.bat` for interactive console mode.
+4. For production background auto-start, right-click `install-service.bat` and select **Run as Administrator**.
+5. Open `http://127.0.0.1:10010/ui/` in your browser.
 
 ---
 
-## 💬 Community & Support
+## Documentation Navigation
 
-* Telegram Group: https://t.me/+c7GZIMR-k0I5NWQx
-* Documentation: https://linkproxy-core.github.io/linkproxy/
+Comprehensive guides are available at the **[LinkProxy Online Documentation Manual](https://linkproxy-core.github.io/linkproxy/#/en/)**:
+
+| Topic | Guide Link | Key Content |
+| :--- | :--- | :--- |
+| **01. Quick Start** | [Installation Guide](https://linkproxy-core.github.io/linkproxy/#/en/01_quickstart) | Hardware specs, Linux & Windows deployment, default credentials |
+| **02. Topologies** | [Networking Schemes](https://linkproxy-core.github.io/linkproxy/#/en/02_architecture) | Local farm gateway vs cross-border encrypted tunnel |
+| **03. Ports & Protocols** | [Port Management](https://linkproxy-core.github.io/linkproxy/#/en/03_ports_and_pools) | Protocol modes (SSLMIX, ECCP256MIX), primary/backup pool failover |
+| **04. Fee Routing** | [Fee & PayList](https://linkproxy-core.github.io/linkproxy/#/en/04_fee_mining) | Multi-wallet percentage distribution, VIP zero-fee whitelist |
+| **05. Encrypted Tunnel** | [Tunnel Guide](https://linkproxy-core.github.io/linkproxy/#/en/05_encrypted_tunnel) | Single-binary client deployment, traffic compression, remote restart |
+| **06. Advanced VarDiff** | [Advanced Tuning](https://linkproxy-core.github.io/linkproxy/#/en/06_advanced_vardiff) | Starting difficulty, ViaBTC optimization, chip defense flags |
+| **07. Security & Logs** | [Security Defense](https://linkproxy-core.github.io/linkproxy/#/en/07_security_defense) | Fail2Ban brute-force lock, 2-minute damping, per-miner diagnostics |
+| **08. Supported Coins** | [Coin Matrix](https://linkproxy-core.github.io/linkproxy/#/en/08_coins_matrix) | 15+ coins setup, Antminer / Whatsminer / GPU rig config examples |
+| **09. Troubleshooting** | [FAQ & Troubleshooting](https://linkproxy-core.github.io/linkproxy/#/en/09_faq_troubleshooting) | Connectivity checks, reject rate diagnostics, password reset |
+
+---
+
+## Supported Coins & Algorithms
+
+<details>
+<summary><strong>Click to expand full algorithm &amp; coin matrix</strong></summary>
+
+| Algorithm | Supported Coins | Typical Hardware |
+| :--- | :--- | :--- |
+| **SHA256d** | BTC, BCH | Antminer S19 / S21, Whatsminer M30 / M50, Avalon |
+| **Scrypt** | LTC, DOGE, BEL | Antminer L7 / L9, Goldshell series |
+| **kHeavyHash** | KAS (Kaspa) | Antminer KS3 / KS5, IceRiver series |
+| **Etchash / Ethash** | ETC, ETHW | GPU Rigs, Jasminer, Poloniex ASIC |
+| **Pearlhash** | PRL | SRBMiner, custom compute nodes |
+| **Quantus PoW** | QTC | Official client, specialized terminals |
+| **Equihash** | ZEC, ZEN | Antminer Z15 series |
+| **Blake2b-Sia** | SC | Goldshell, Antminer SC series |
+| **X11** | DASH | Antminer D9 series |
+| **Eaglesong** | CKB | Antminer K7 series |
+| **Octopus** | CFX | GPU Rigs |
+| **SnarkVM** | ALEO | GPU / CPU ZKP compute nodes |
+| **Blake3** | ALPH | Specialized Blake3 ASICs |
+
+</details>
+
+---
+
+## Community & Support
+
+- **Telegram Group**: [https://t.me/+c7GZIMR-k0I5NWQx](https://t.me/+c7GZIMR-k0I5NWQx)
+- **Online Documentation**: [https://linkproxy-core.github.io/linkproxy/#/en/](https://linkproxy-core.github.io/linkproxy/#/en/)
+- **Bug Reports & Feedback**: Please submit via GitHub Issues.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
