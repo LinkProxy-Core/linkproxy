@@ -128,16 +128,36 @@ curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/insta
 
 ## ⛏️ 支持币种与算法
 
-| 币种 | 协议类型 | 算法与特性 | 兼容设备 |
-| :--- | :--- | :--- | :--- |
-| **BTC / BCH** | Stratum V1 | SHA-256 (ASIC 深度优化，0 芯片重启) | 蚂蚁 S19/S21、神马 M30/M50、阿瓦隆 |
-| **LTC / DOGE** | Stratum V1 | Scrypt (主池/备用池平滑切换) | 蚂蚁 L7/L9、金贝系列 |
-| **KAS (Kaspa)** | Stratum | kHeavyHash (超低延迟并行通道) | 冰壳 KS3/KS5、蚂蚁 KS19 |
-| **ETC / ETHW** | EthProxy | Etchash / Ethash (8字节 Nonce 原生保护) | GPU 显卡矿机、茉莉/菠萝 ASIC |
-| **PRL (珍珠币)** | Stratum | Pearlhash (原生支持，自适应双向改写) | 全系列 Pearlhash 计算节点 |
-| **QTC (Quantus)** | Stratum | Poseidon2-Goldilocks (Quantus 专属中转分流) | Quantus GPU / CPU 算力节点 |
-| **ZEC / DASH** | Stratum | Equihash / X11 | 蚂蚁 Z15 / D7 / D9 |
-| **CKB / ALEO** | Stratum | Eaglesong / ZKP Proof | 蚂蚁 K7 / GPU 集群 |
+| 分类 | 币种 | 协议类型 | 算法与特性 | 兼容设备 |
+| :--- | :--- | :--- | :--- | :--- |
+| **热门 PoW 新币** | **PRL (珍珠币)** | Stratum (JSON-RPC) | Pearlhash (原生专属对象认证，60s 平滑调度) | RedPearl / SRBMiner 算力节点 |
+| | **QTC (Quantus)** | Stratum | Poseidon2-Goldilocks (Quantus 专属分流) | Quantus GPU / CPU 算力节点 |
+| **SHA-256 (ASIC)** | **BTC / BCH** | Stratum V1 | SHA-256 (ASIC 深度优化，0 芯片重启) | 蚂蚁 S19/S21、神马 M30/M50、阿瓦隆 |
+| | **BSV** | Stratum V1 | SHA-256 (大区块高吞吐透传) | 全系列 SHA-256 矿机 |
+| | **FB (Fractal Bitcoin)** | Stratum V1 | SHA-256 (分形比特币专属对齐) | 蚂蚁 S19/S21、神马系列 |
+| | **QUAI-SHA256** | Stratum V1 | SHA-256 (Quai 矩阵分流) | SHA-256 ASIC 矿机 |
+| | **XEC (eCash) / DGB** | Stratum V1 | SHA-256 (多链与雪崩协议混挖支持) | 全系列 SHA-256 矿机 |
+| **Scrypt & Kaspa** | **LTC** | Stratum V1 | Scrypt (含 DOGE/BELLS 联合挖矿，主备平滑切换) | 蚂蚁 L7/L9、金贝系列 |
+| | **QUAI-SCRYPT** | Stratum V1 | Scrypt (Quai 矩阵分流) | Scrypt ASIC 矿机 |
+| | **KAS (Kaspa)** | Stratum | kHeavyHash (d=8192 动态注入，超低延迟并行通道) | 冰壳 KS3/KS5、蚂蚁 KS19 |
+| | **ZEC** | Stratum | Equihash (零知识证明 PoW) | 蚂蚁 Z11/Z15 |
+| **Ethash / Etchash** | **ETC** | EthProxy / Stratum | Etchash (Target 难度无感重写，8字节 Nonce 原生保护) | GPU 显卡矿机、茉莉/菠萝 ASIC |
+| | **ETHW / OCTA** | EthProxy / Stratum | Ethash (OctaSpace / ETHW 显卡及 ASIC 兼容) | GPU 显卡矿机、主流 ASIC |
+| **显卡 (GPU) 矩阵** | **QUAI-KAWPOW / RVN** | Stratum | KawPow (乌鸦币与 Quai 显卡矩阵) | NVIDIA / AMD 显卡集群 |
+| | **TARI-C29** | Stratum | Cuckaroo29 (Tari 显卡算法) | 高显存 GPU 算力节点 |
+| | **IRON (Iron Fish)** | Stratum | FishHash (隐私公链 GPU 挖矿) | 全系列 GPU 矿机 |
+| | **XEL (Xelis)** | Stratum | XelisHash (最新抗 ASIC 算法) | 现代 GPU 显卡集群 |
+| | **ERG (Ergo)** | Stratum | Autolykos2 (显存友好型 GPU 算法) | 全系列 GPU 矿机 |
+| | **CFX (Conflux)** | Stratum | Octopus (树图共识显卡挖矿) | 全系列 GPU 矿机 |
+| | **NEXA** | Stratum | NexaPow (可扩展 GPU 算法) | NVIDIA / AMD 显卡集群 |
+| | **XNA / NEURAL** | Stratum | KawPow (Neurai 算力中转) | 全系列 GPU 矿机 |
+| **其他专用 ASIC** | **ALPH (Alephium)** | Stratum | Blake3 (高并发微块 PoW) | 冰壳 AL0/AL1、蚂蚁 AL3 |
+| | **TARI-SHA3X** | Stratum | SHA3X (Tari 专属 ASIC 模式) | Tari ASIC 算力硬件 |
+| **处理器 (CPU) 矩阵** | **XMR (Monero)** | Stratum | RandomX (CPU 隐私挖矿，SeedHash 平滑透传) | AMD EPYC / Ryzen / Intel CPU |
+| | **ZEPH (Zephyr)** | Stratum | RandomX (隐私稳定币 CPU 挖矿) | 全系列 CPU 算力节点 |
+| | **TARI-RX** | Stratum | RandomX (Tari 处理器混合挖矿) | 全系列 CPU 算力节点 |
+| **经典主流代币** | **SC / DASH / CKB / ALEO** | Stratum | Blake2b / X11 / Eaglesong / ZKP 证明分流 | 蚂蚁 D7/D9/K7、GPU 集群 |
+| **通用扩展** | **自定义代币** | 自适应 | 兼容主流 Stratum 变体与 JSON-RPC | 全系列矿机与算力软件 |
 
 ---
 

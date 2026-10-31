@@ -120,19 +120,24 @@ Comprehensive guides are available at the **[LinkProxy Online Documentation Manu
 
 | Algorithm | Supported Coins | Typical Hardware |
 | :--- | :--- | :--- |
-| **SHA256d** | BTC, BCH | Antminer S19 / S21, Whatsminer M30 / M50, Avalon |
-| **Scrypt** | LTC, DOGE, BEL | Antminer L7 / L9, Goldshell series |
+| **Pearlhash** | PRL (Pearl) | RedPearl, SRBMiner, custom GPU nodes |
+| **Quantus PoW** | QTC (Quantus) | Quantus GPU / CPU compute nodes |
+| **SHA256d** | BTC, BCH, BSV, FB (Fractal), QUAI, XEC, DGB | Antminer S19 / S21, Whatsminer M30 / M50, Avalon |
+| **Scrypt** | LTC, DOGE, BEL, QUAI-Scrypt | Antminer L7 / L9, Goldshell series |
 | **kHeavyHash** | KAS (Kaspa) | Antminer KS3 / KS5, IceRiver series |
-| **Etchash / Ethash** | ETC, ETHW | GPU Rigs, Jasminer, Poloniex ASIC |
-| **Pearlhash** | PRL | SRBMiner, custom compute nodes |
-| **Quantus PoW** | QTC | Official client, specialized terminals |
-| **Equihash** | ZEC, ZEN | Antminer Z15 series |
-| **Blake2b-Sia** | SC | Goldshell, Antminer SC series |
-| **X11** | DASH | Antminer D9 series |
-| **Eaglesong** | CKB | Antminer K7 series |
-| **Octopus** | CFX | GPU Rigs |
-| **SnarkVM** | ALEO | GPU / CPU ZKP compute nodes |
-| **Blake3** | ALPH | Specialized Blake3 ASICs |
+| **Equihash** | ZEC, ZEN | Antminer Z11 / Z15 series |
+| **Etchash / Ethash** | ETC, ETHW, OCTA | GPU Rigs, Jasminer, Poloniex ASIC |
+| **KawPow** | RVN, QUAI-KawPow, XNA / NEURAL | NVIDIA / AMD GPU Rigs |
+| **FishHash** | IRON (Iron Fish) | GPU compute nodes |
+| **XelisHash** | XEL (Xelis) | Modern GPU Rigs |
+| **Autolykos2** | ERG (Ergo) | GPU compute nodes |
+| **Octopus** | CFX (Conflux) | GPU Rigs |
+| **NexaPow** | NEXA | GPU Rigs |
+| **Blake3** | ALPH (Alephium) | IceRiver AL0/AL1, Antminer AL3 |
+| **SHA3X / C29 / RX**| TARI (SHA3X, Cuckaroo29, RandomX) | ASIC, GPU and CPU compute nodes |
+| **RandomX** | XMR (Monero), ZEPH (Zephyr), TARI-RX | AMD EPYC, Ryzen, Intel CPUs |
+| **Legacy PoW** | SC, DASH, CKB, ALEO | Antminer D9/K7, GPU clusters |
+| **Custom / Stratum**| Custom Stratum Tokens | All compatible hardware and software |
 
 </details>
 
