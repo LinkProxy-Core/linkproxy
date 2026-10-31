@@ -23,7 +23,7 @@ get_latest_release_tag() {
     if [[ "$tag" =~ ^v[0-9]+\.[0-9]+ ]]; then
         echo "$tag"
     else
-        echo "v2.2.145"
+        echo "v2.2.146"
     fi
 }
 SOFTWARE_VERSION="$(get_latest_release_tag)"
