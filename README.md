@@ -132,7 +132,7 @@ LinkProxy 针对国内外顶级矿池的 Stratum 协议方言、VarDiff 动态�
 
 | 矿池分类 | 支持矿池与生态 | 兼容特性与深度优化 |
 | :--- | :--- | :--- |
-| **主流综合大池** | **鱼池 (F2Pool)**、**微比特 (ViaBTC)**、**蚂蚁矿池 (AntPool)**、**币安矿池 (Binance Pool)**、**币印 (Poolin)** | • **ViaBTC**：深度解决矿机授权前下发难度的时序竞争，出快块切块瞬态拒绝平滑为 Accept<br>• **F2Pool**：对齐底层 Extranonce 严格校验，切池无感毫秒级同步，支持 Kaspa `d=8192` 动态降压<br>• **AntPool / Binance**：完美兼容观察者模式与多级子账户切分分流 |
+| **主流综合大池** | **鱼池 (F2Pool)**、**微比特 (ViaBTC)**、**蚂蚁矿池 (AntPool)**、**币安矿池 (Binance Pool)**、**币印 (Poolin)** | • **ViaBTC**：深度解决矿机授权前下发难度的时序竞争，出快块切块瞬态拒绝平滑为 Accept<br>• **F2Pool**： 严格校验，切池无感毫秒级同步，支持 Kaspa  动态降压<br>• **AntPool / Binance**：完美兼容观察者模式与多级子账户切分分流 |
 | **头矿与极速上新** | **Kryptex Pool**、**WoolyPooly**、**HeroMiners**、**2Miners**、**HummerPool (蜂鸟)** | • **Kryptex**：原生适配多区域高速接入点，极速跟进最新上线 PoW 币种<br>• **头矿矩阵**：首发支持 **PRL (Pearlhash)**、**QTC (Quantus)**、**Kaspa**、**ALPH** 等热门首发币<br>• **小币微缓冲**：为高频出块币种提供专用快速确认通道，拒绝率降低 80%+ |
 | **海外及机构专区** | **Foundry USA**、**EMCD**、**NiceHash**、**MiningPoolHub**、**Pool-X** | • **NiceHash**：严格对齐 Stratum/SSL 规范与 Extranonce Subscribe 扩展协议<br>• **跨国容灾**：支持高延迟跨境链路自适应 KeepAlive 与 BBR 拥塞控制 |
 
