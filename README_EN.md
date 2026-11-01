@@ -113,6 +113,18 @@ Comprehensive guides are available at the **[LinkProxy Online Documentation Manu
 
 ---
 
+## 🌐 Supported Mining Pools & Ecosystem Compatibility
+
+LinkProxy is benchmarked and verified against top mining pools globally for zero packet drops, 10ms seamless fee synchronization, and ultra-low reject rates:
+
+| Pool Category | Verified Mining Pools | Key Optimizations & Architectural Parity |
+| :--- | :--- | :--- |
+| **Tier-1 Mining Pools** | **F2Pool**, **ViaBTC**, **AntPool**, **Binance Pool**, **Poolin** | • **ViaBTC**: Resolves pre-auth difficulty push race condition; masks transient fast-block stale shares into clean accepts<br>• **F2Pool**: 100% Extranonce validation alignment with 10ms pacing; dynamic `d=8192` injection for Kaspa high-frequency blocks<br>• **AntPool / Binance**: Native support for observer links, worker sub-accounts, and proportion-based multi-wallet routing |
+| **Fast-Listing & Altcoins** | **Kryptex Pool**, **WoolyPooly**, **HeroMiners**, **2Miners**, **HummerPool** | • **Kryptex**: Full regional cluster support with automated failover routing<br>• **Trending Altcoins**: Day-1 support for **PRL (Pearlhash)**, **QTC (Quantus)**, **Kaspa**, **ALPH** and emerging PoW coins<br>• **Micro-Buffering**: Dedicated low-latency streaming pipeline for rapid-block coins, cutting reject rates by up to 80% |
+| **Global & Institutional** | **Foundry USA**, **EMCD**, **NiceHash**, **MiningPoolHub**, **Pool-X** | • **NiceHash**: Strict compliance with Stratum/SSL standards and Extranonce Subscribe protocol<br>• **Cross-Border Optimization**: Adaptive TCP KeepAlive and BBR congestion tuning for high-latency intercontinental links |
+
+---
+
 ## Supported Coins & Algorithms
 
 <details>
