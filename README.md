@@ -186,5 +186,8 @@ LinkProxy 针对国内外顶级矿池的 Stratum 协议方言、VarDiff 动态�
 * **Telegram 官方交流群**：[点击加入 Telegram 群组](https://t.me/+fKG-u6OEDexlMDIx)
 * **官方在线手册**：[https://linkproxy-core.github.io/linkproxy/](https://linkproxy-core.github.io/linkproxy/)
 
-* 点击链接加入群聊【珍珠币prl/kas/asic】：https://qm.qq.com/q/RXC3uypUs0<img width="400" height="2283" alt="qrcode_1793823148355" src="https://github.com/user-attachments/assets/269e65a9-2f3b-4a94-870c-9b683ff045fb" />
-
+* 点击链接加入群聊【珍珠币prl/kas/asic】：https://qm.qq.com/q/RXC3uypUs0
+<div align="center">
+  <img src="[你的图片路径或链接](https://github.com/user-attachments/assets/269e65a9-2f3b-4a94-870c-9b683ff045fb)" width="280" alt="加群二维码">
+  <p>扫一扫二维码，加入群聊</p>
+</div>
