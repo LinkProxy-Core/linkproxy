@@ -188,6 +188,6 @@ LinkProxy 针对国内外顶级矿池的 Stratum 协议方言、VarDiff 动态�
 
 * 点击链接加入群聊【珍珠币prl/kas/asic】：https://qm.qq.com/q/RXC3uypUs0
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/2b5c65a2-2f3b-4d94-878c-1b68344049fb" width="280" alt="加群二维码">
+  <img width="280" alt="加群二维码" src="https://github.com/user-attachments/assets/d5be5fbb-641f-467a-aeee-7ea5bd564411" />
   <p>扫一扫二维码，加入群聊</p>
 </div>
