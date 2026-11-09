@@ -20,7 +20,7 @@
   </p>
 
   <p align="center">
-    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.147-blue.svg?style=flat-square" alt="Version"></a>
+    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.150-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/#/en/"><img src="https://img.shields.io/badge/Docs-Online%20Manual-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
     <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg?style=flat-square" alt="Platform">
@@ -110,6 +110,27 @@ Comprehensive guides are available at the **[LinkProxy Online Documentation Manu
 | **07. Security & Logs** | [Security Defense](https://linkproxy-core.github.io/linkproxy/#/en/07_security_defense) | Fail2Ban brute-force lock, 2-minute damping, per-miner diagnostics |
 | **08. Supported Coins** | [Coin Matrix](https://linkproxy-core.github.io/linkproxy/#/en/08_coins_matrix) | 15+ coins setup, Antminer / Whatsminer / GPU rig config examples |
 | **09. Troubleshooting** | [FAQ & Troubleshooting](https://linkproxy-core.github.io/linkproxy/#/en/09_faq_troubleshooting) | Connectivity checks, reject rate diagnostics, password reset |
+
+---
+
+## ⚡ Hardware & Third-Party Firmware Compatibility Matrix
+
+LinkProxy has been extensively benchmarked on live mining hardware across mainstream ASIC controller state machines and third-party overclocking/undervolting firmware, ensuring **zero hashboard resets, zero chip restarts, and zero packet loss** during routine operations and failover transitions:
+
+| Category | Brand / Firmware / Miner | Supported Models & Key Features |
+| :--- | :--- | :--- |
+| **Mainstream ASICs** | **Bitmain Antminer** | • S21 / S21 XP / S21 Pro / S19 / S19 Pro / S19 XP / S19j Pro / T21 / T19<br>• Scrypt: L9 / L7 / L3+ series<br>• Etchash: E9 / E9 Pro (strict 8-byte hex Nonce normalization)<br>• Kaspa: KS5 / KS5 Pro / KS3; Alephium: AL3 |
+| | **MicroBT Whatsminer** | • M50 / M50S / M50S++ / M30S / M30S+ / M30S++ / M20S series (Hydro & Air-cooled)<br>• Whatsminer-specific handshake sequencing to eliminate timeout and deadlocks |
+| | **Canaan Avalon** | • A1566 / A1466 / A1346 / A1246 series<br>• Strictly ordered `mining.authorize` and difficulty packet sequencing |
+| | **IceRiver** | • KS5L / KS3M / KS3 / KS2 / KS1 / KS0 Pro / KS0 (Full Kaspa fleet)<br>• AL0 / AL1 (Alephium fleet) low-latency streaming optimization |
+| | **Jasminer / iPollo / Innosilicon / Goldshell** | • **Jasminer**: X16-Q / X16-P / X4 Etchash ASIC chip compatibility<br>• **iPollo**: V1 / V1 Mini series<br>• **Innosilicon**: A11 / A10 Pro / T3+ / T2T<br>• **Goldshell**: AL-BOX / KA-BOX / MINI-DOGE / E-XB |
+| **Custom Overclocking Firmware** | **Vnish Firmware** | • Industry-standard S19/S21 aftermarket firmware with auto-tuning and voltage scaling<br>• 100% transparent telemetry with zero disconnection during fee transitions |
+| | **Braiins OS / Braiins OS+ (BOS)** | • Enterprise open-source firmware, full Stratum V1 standard compliance |
+| | **Hiveon ASIC Firmware** | • HiveOS mining fleet management firmware with synchronized batch switching |
+| | **MSKminer / Mara / LuxOS** | • Native telemetry compatibility for high-frequency industrial mining firmware |
+| | **Factory OEM Firmware** | • 100% compatible with Bitmain, MicroBT Whatsminer, and Canaan Avalon stock firmware |
+| **GPU & CPU Computing Rigs** | **GPU Mining Software** | • **SRBMiner-MULTI**: Day-1 optimized miner for PRL (Pearlhash) & QTC (Quantus)<br>• **lolMiner / GMiner / T-Rex / TeamRedMiner / NBMiner / Rigel / BzMiner**: Full GPU fleet support for ETC, RVN, Kaspa, ALPH, IRON |
+| | **CPU Mining Software** | • **XMRig**: Ultra-fast Stratum connection for Monero (XMR), Zephyr (ZEPH), QTC |
 
 ---
 

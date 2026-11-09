@@ -24,7 +24,7 @@
   </p>
 
   <p>
-    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.147-blue.svg?style=flat-square" alt="Version"></a>
+    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.150-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-%E5%AE%98%E6%96%B9%E5%9C%A8%E7%BA%BF%E6%89%8B%E5%86%8C-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
     <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg?style=flat-square" alt="Platform">
@@ -123,6 +123,27 @@ curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/insta
   * [windows/start.bat](windows/start.bat) —— 前台带日志启动脚本
   * [windows/install-service.bat](windows/install-service.bat) —— 计划任务后台自启安装工具
   * [windows/uninstall-service.bat](windows/uninstall-service.bat) —— 后台服务一键卸载清理
+
+---
+
+## ⚡ 矿机硬件与主流固件全面兼容验证
+
+LinkProxy 针对主流硬件算力板状态机与第三方超频/降频固件进行了高强度实机长周期验证，无论是在线切池、平滑分流还是网络闪断恢复，均确保 **0 算力板复位、0 芯片重启、0 丢包**：
+
+| 分类 | 品牌 / 固件 / 内核 | 重点支持型号与兼容特性 |
+| :--- | :--- | :--- |
+| **主流 ASIC 品牌** | **蚂蚁矿机 (Bitmain Antminer)** | • 支持 S21 / S21 XP / S21 Pro / S19 / S19 Pro / S19 XP / S19j Pro / T21 / T19<br>• 支持莱特/狗狗系列：L9 / L7 / L3+<br>• 支持 ETC/ETHW 专业机：E9 / E9 Pro (8字节 Nonce 严格对齐)<br>• 支持 Kaspa 系列：KS5 / KS5 Pro / KS3；Alephium 系列：AL3 |
+| | **神马矿机 (MicroBT Whatsminer)** | • 支持 M50 / M50S / M50S++ / M30S / M30S+ / M30S++ / M20S 全系水冷/风冷机型<br>• 针对神马底层握手协议时序优化，杜绝握手超时与假死 |
+| | **阿瓦隆矿机 (Canaan Avalon)** | • 支持 A1566 / A1466 / A1346 / A1246 系列<br>• 原生适配阿瓦隆严格的 `mining.authorize` 与下发难度时序编排 |
+| | **冰河矿机 (IceRiver)** | • 支持 KS5L / KS3M / KS3 / KS2 / KS1 / KS0 Pro / KS0 (Kaspa 全系列)<br>• 支持 AL0 / AL1 (Alephium 系列) 极速微块低延迟分流 |
+| | **茉莉 / 菠萝 / 芯动 / 金贝** | • **茉莉 (Jasminer)**：X16-Q / X16-P / X4 全系 Etchash 芯片高并发兼容<br>• **菠萝 (iPollo)**：V1 / V1 Mini 系列<br>• **芯动 (Innosilicon)**：A11 / A10 Pro / T3+ / T2T<br>• **金贝 (Goldshell)**：AL-BOX / KA-BOX / MINI-DOGE / E-XB |
+| **第三方超频与集群固件** | **Vnish Firmware** | • 全球矿场装机量最高的 S19/S21 第三方超频固件，支持自动调频与欠压保护<br>• 100% 兼容 Vnish 智能调频与温度监控通道，切池零断开 |
+| | **Braiins OS / Braiins OS+ (BOS)** | • 北美及欧洲大型机构标准开源固件，完美支持标准 Stratum V1 与快速响应 |
+| | **Hiveon ASIC Firmware** | • HiveOS 矿场集群专用固件，状态机完全对齐，支持批量集群下发与热平滑分流 |
+| | **MSKminer / Mara / LuxOS** | • 原生适配 MSKminer、Marathon (Mara) 及 LuxOS 等工业级固件的高频心跳与状态回传 |
+| | **官方原厂固件** | • 100% 兼容 Bitmain 官方最新原厂固件、Whatsminer 官方原厂固件与 Canaan 官方固件 |
+| **显卡 (GPU) 与 处理器 (CPU)** | **主流 GPU 算力内核** | • **SRBMiner-MULTI**：PRL (Pearlhash)、QTC (Quantus) 新币首发推荐内核<br>• **lolMiner / GMiner / T-Rex / TeamRedMiner / NBMiner / Rigel / BzMiner**：支持 ETC、RVN、Kaspa、ALPH、IRON 等全系显卡挖矿内核 |
+| | **CPU 算力内核** | • **XMRig**：Monero (XMR)、Zephyr (ZEPH)、QTC CPU 算力节点 100% 极速直连 |
 
 ---
 
