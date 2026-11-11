@@ -179,7 +179,7 @@ show_menu() {
         echo -e "${CYAN}6.${NC} Check Linux Max Connections"
         echo -e "${CYAN}7.${NC} Modify Linux Max Connections to 1,048,576"
         echo -e "${CYAN}8.${NC} Enable Auto-Start on Boot"
-        echo -e "${CYAN}9.${NC} Reset Admin Password & Web Port"
+        echo -e "${CYAN}9.${NC} View or Reset Admin Password & Web Port"
         echo -e "${CYAN}10.${NC} View Running Status & Configuration"
         echo -e "${CYAN}11.${NC} Clear Logs & Cache"
         echo ""
@@ -203,7 +203,7 @@ show_menu() {
         echo -e "${CYAN}6.${NC} 检查 Linux 最大连接数"
         echo -e "${CYAN}7.${NC} 修改 Linux 最大连接数为 1048576 (需要服务器重启)"
         echo -e "${CYAN}8.${NC} 手动设置开机自启"
-        echo -e "${CYAN}9.${NC} 重置管理员密码与管理端口"
+        echo -e "${CYAN}9.${NC} 查看或重置管理员密码与管理端口"
         echo -e "${CYAN}10.${NC} 查看运行状态与配置"
         echo -e "${CYAN}11.${NC} 删除错误与运行日志"
         echo ""
@@ -561,27 +561,313 @@ enable_autostart() {
 
 reset_admin() {
     clear
-    echo -e "${BOLD}${CYAN}========== 重置面板端口与登录状态 ==========${NC}"
     local current_port
     current_port=$(get_web_port)
-    echo -e "当前面板端口为: ${GREEN}${current_port}${NC}"
-    echo ""
-    read_tty "是否需要修改面板监听端口？[y/N]: " change_p
-    if [ "$change_p" = "y" ] || [ "$change_p" = "Y" ]; then
-        read_tty "请输入新的面板端口 (1-65535): " new_port
-        if [[ "$new_port" =~ ^[0-9]+$ ]] && [ "$new_port" -ge 1 ] && [ "$new_port" -le 65535 ]; then
-            sed -i "s/-api-port [0-9]*/-api-port $new_port/g" "/etc/systemd/system/${SERVICE_NAME}.service"
-            systemctl daemon-reload
-            systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
-            echo -e "${GREEN}✅ 端口已更改为 $new_port 并重启服务！${NC}"
-        else
-            echo -e "${RED}端口输入无效，已取消。${NC}"
+    local pub_ip
+    pub_ip=$(get_public_ip)
+    local db_file=""
+    if [ -f "$WORK_DIR/data/proxy.db" ]; then
+        db_file="$WORK_DIR/data/proxy.db"
+    elif [ -f "$WORK_DIR/miner_proxy.db" ]; then
+        db_file="$WORK_DIR/miner_proxy.db"
+    elif [ -f "/root/linkproxy/data/proxy.db" ]; then
+        db_file="/root/linkproxy/data/proxy.db"
+    elif [ -f "/root/MinerLink-Proxy/data/proxy.db" ]; then
+        db_file="/root/MinerLink-Proxy/data/proxy.db"
+    fi
+
+    local current_account="admin"
+    local current_password="admin"
+
+    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+        if command -v python3 >/dev/null 2>&1; then
+            local queried
+            queried=$(python3 -c "import sqlite3
+try:
+    c = sqlite3.connect('$db_file')
+    r = c.cursor().execute('SELECT admin_account, admin_password FROM global_configs LIMIT 1').fetchone()
+    if r:
+        print((r[0] or 'admin') + '|||' + (r[1] or 'admin'))
+except Exception:
+    pass" 2>/dev/null)
+            if [ -n "$queried" ]; then
+                current_account="${queried%%|||*}"
+                current_password="${queried##*|||}"
+            fi
+        elif command -v sqlite3 >/dev/null 2>&1; then
+            local db_acc
+            db_acc=$(sqlite3 "$db_file" "SELECT admin_account FROM global_configs LIMIT 1;" 2>/dev/null)
+            [ -n "$db_acc" ] && current_account="$db_acc"
+            local db_pwd
+            db_pwd=$(sqlite3 "$db_file" "SELECT admin_password FROM global_configs LIMIT 1;" 2>/dev/null)
+            [ -n "$db_pwd" ] && current_password="$db_pwd"
         fi
     fi
-    echo ""
-    echo -e "若需重置管理员账密，代理在无初始管理员时会自动进入开放注册状态，"
-    echo -e "您可通过浏览器直接访问: ${CYAN}http://$(get_public_ip):$(get_web_port)/ui/${NC}"
-    pause
+
+    if [ "$ML_LANG" = "en" ]; then
+        echo -e "${BOLD}${CYAN}========== View or Reset Admin Password & Web Port ==========${NC}"
+        echo -e "${BOLD}Current Web Console Configuration:${NC}"
+        echo -e "  • Admin Username:  ${GREEN}${current_account}${NC}"
+        echo -e "  • Admin Password:  ${GREEN}${current_password}${NC}"
+        echo -e "  • Web Listen Port: ${GREEN}${current_port}${NC}"
+        echo -e "  • Web Console URL: ${CYAN}http://${pub_ip}:${current_port}/ui/${NC}"
+        echo -e "${BOLD}${CYAN}------------------------------------------------------------${NC}"
+        echo -e "Available Actions:"
+        echo -e "  ${CYAN}1.${NC} Reset / Modify Admin Password"
+        echo -e "  ${CYAN}2.${NC} Modify Admin Username"
+        echo -e "  ${CYAN}3.${NC} Change Web Console Port"
+        echo -e "  ${CYAN}4.${NC} Restore Defaults (admin / admin / 10010)"
+        echo -e "  ${CYAN}0.${NC} Return to Main Menu"
+        echo ""
+        local op_choice
+        read_tty "Enter choice [0-4] (default 0): " op_choice
+        op_choice=${op_choice:-0}
+
+        case "$op_choice" in
+            1)
+                echo ""
+                read_tty "Enter new admin password: " new_pass
+                if [ -n "$new_pass" ]; then
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3, sys
+con = sqlite3.connect('$db_file')
+cur = con.cursor()
+r = cur.execute('SELECT id FROM global_configs LIMIT 1').fetchone()
+if r:
+    cur.execute('UPDATE global_configs SET admin_password=? WHERE id=?', (sys.argv[1], r[0]))
+else:
+    cur.execute('INSERT INTO global_configs (admin_account, admin_password, web_port, enable_logging) VALUES (?, ?, ?, ?)', ('admin', sys.argv[1], 10010, 1))
+con.commit()" "$new_pass" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            local esc_pass="${new_pass//\'/\'\'}"
+                            sqlite3 "$db_file" "UPDATE global_configs SET admin_password='$esc_pass' WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ Password successfully updated to: ${new_pass}${NC}"
+                else
+                    echo -e "${RED}Input empty, cancelled.${NC}"
+                fi
+                pause
+                ;;
+            2)
+                echo ""
+                read_tty "Enter new admin username: " new_acc
+                if [ -n "$new_acc" ]; then
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3, sys
+con = sqlite3.connect('$db_file')
+cur = con.cursor()
+r = cur.execute('SELECT id FROM global_configs LIMIT 1').fetchone()
+if r:
+    cur.execute('UPDATE global_configs SET admin_account=? WHERE id=?', (sys.argv[1], r[0]))
+else:
+    cur.execute('INSERT INTO global_configs (admin_account, admin_password, web_port, enable_logging) VALUES (?, ?, ?, ?)', (sys.argv[1], 'admin', 10010, 1))
+con.commit()" "$new_acc" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            local esc_acc="${new_acc//\'/\'\'}"
+                            sqlite3 "$db_file" "UPDATE global_configs SET admin_account='$esc_acc' WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ Username successfully updated to: ${new_acc}${NC}"
+                else
+                    echo -e "${RED}Input empty, cancelled.${NC}"
+                fi
+                pause
+                ;;
+            3)
+                echo ""
+                read_tty "Enter new Web Console port (1-65535): " new_port
+                if [[ "$new_port" =~ ^[0-9]+$ ]] && [ "$new_port" -ge 1 ] && [ "$new_port" -le 65535 ]; then
+                    if [ -f "/etc/systemd/system/${SERVICE_NAME}.service" ]; then
+                        sed -i "s/-api-port [0-9]*/-api-port $new_port/g" "/etc/systemd/system/${SERVICE_NAME}.service"
+                    fi
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3
+con = sqlite3.connect('$db_file')
+con.cursor().execute('UPDATE global_configs SET web_port=? WHERE id=(SELECT id FROM global_configs LIMIT 1)', ($new_port,))
+con.commit()" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            sqlite3 "$db_file" "UPDATE global_configs SET web_port=$new_port WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    if command -v ufw >/dev/null 2>&1; then
+                        ufw allow "$new_port"/tcp >/dev/null 2>&1
+                    elif command -v firewall-cmd >/dev/null 2>&1; then
+                        firewall-cmd --zone=public --add-port="$new_port"/tcp --permanent >/dev/null 2>&1
+                        firewall-cmd --reload >/dev/null 2>&1
+                    fi
+                    systemctl daemon-reload
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ Port updated to $new_port and service restarted!${NC}"
+                    echo -e "New Console URL: ${CYAN}http://${pub_ip}:${new_port}/ui/${NC}"
+                else
+                    echo -e "${RED}Invalid port, cancelled.${NC}"
+                fi
+                pause
+                ;;
+            4)
+                echo ""
+                read_tty "Reset username and password to admin / admin? [y/N]: " confirm_reset
+                if [ "$confirm_reset" = "y" ] || [ "$confirm_reset" = "Y" ]; then
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3
+con = sqlite3.connect('$db_file')
+con.cursor().execute('UPDATE global_configs SET admin_account=\"admin\", admin_password=\"admin\" WHERE id=(SELECT id FROM global_configs LIMIT 1)')
+con.commit()" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            sqlite3 "$db_file" "UPDATE global_configs SET admin_account='admin', admin_password='admin' WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ Successfully restored default credentials (admin / admin)!${NC}"
+                else
+                    echo "Cancelled."
+                fi
+                pause
+                ;;
+            0|*)
+                return
+                ;;
+        esac
+    else
+        echo -e "${BOLD}${CYAN}========== 查看或重置管理员密码与管理端口 ==========${NC}"
+        echo -e "${BOLD}当前管理面板配置信息：${NC}"
+        echo -e "  • 管理员账号:   ${GREEN}${current_account}${NC}"
+        echo -e "  • 管理员密码:   ${GREEN}${current_password}${NC}"
+        echo -e "  • 面板监听端口: ${GREEN}${current_port}${NC}"
+        echo -e "  • 控制台访问地址: ${CYAN}http://${pub_ip}:${current_port}/ui/${NC}"
+        echo -e "${BOLD}${CYAN}------------------------------------------------------------${NC}"
+        echo -e "请选择操作："
+        echo -e "  ${CYAN}1.${NC} 重置/修改管理员密码"
+        echo -e "  ${CYAN}2.${NC} 修改管理员账号"
+        echo -e "  ${CYAN}3.${NC} 修改管理面板端口"
+        echo -e "  ${CYAN}4.${NC} 一键恢复默认设置 (admin / admin / 10010)"
+        echo -e "  ${CYAN}0.${NC} 返回主菜单"
+        echo ""
+        local op_choice
+        read_tty "请输入选项 [0-4] (默认 0): " op_choice
+        op_choice=${op_choice:-0}
+
+        case "$op_choice" in
+            1)
+                echo ""
+                read_tty "请输入新的管理员密码: " new_pass
+                if [ -n "$new_pass" ]; then
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3, sys
+con = sqlite3.connect('$db_file')
+cur = con.cursor()
+r = cur.execute('SELECT id FROM global_configs LIMIT 1').fetchone()
+if r:
+    cur.execute('UPDATE global_configs SET admin_password=? WHERE id=?', (sys.argv[1], r[0]))
+else:
+    cur.execute('INSERT INTO global_configs (admin_account, admin_password, web_port, enable_logging) VALUES (?, ?, ?, ?)', ('admin', sys.argv[1], 10010, 1))
+con.commit()" "$new_pass" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            local esc_pass="${new_pass//\'/\'\'}"
+                            sqlite3 "$db_file" "UPDATE global_configs SET admin_password='$esc_pass' WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ 管理员密码已成功修改为: ${new_pass}${NC}"
+                    echo -e "${YELLOW}提示：服务已安全重载生效，任何之前的密码错误 IP 锁定已同时自动解除。${NC}"
+                else
+                    echo -e "${RED}输入为空，取消修改。${NC}"
+                fi
+                pause
+                ;;
+            2)
+                echo ""
+                read_tty "请输入新的管理员账号: " new_acc
+                if [ -n "$new_acc" ]; then
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3, sys
+con = sqlite3.connect('$db_file')
+cur = con.cursor()
+r = cur.execute('SELECT id FROM global_configs LIMIT 1').fetchone()
+if r:
+    cur.execute('UPDATE global_configs SET admin_account=? WHERE id=?', (sys.argv[1], r[0]))
+else:
+    cur.execute('INSERT INTO global_configs (admin_account, admin_password, web_port, enable_logging) VALUES (?, ?, ?, ?)', (sys.argv[1], 'admin', 10010, 1))
+con.commit()" "$new_acc" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            local esc_acc="${new_acc//\'/\'\'}"
+                            sqlite3 "$db_file" "UPDATE global_configs SET admin_account='$esc_acc' WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ 管理员账号已成功修改为: ${new_acc}${NC}"
+                else
+                    echo -e "${RED}输入为空，取消修改。${NC}"
+                fi
+                pause
+                ;;
+            3)
+                echo ""
+                read_tty "请输入新的面板端口 (1-65535): " new_port
+                if [[ "$new_port" =~ ^[0-9]+$ ]] && [ "$new_port" -ge 1 ] && [ "$new_port" -le 65535 ]; then
+                    if [ -f "/etc/systemd/system/${SERVICE_NAME}.service" ]; then
+                        sed -i "s/-api-port [0-9]*/-api-port $new_port/g" "/etc/systemd/system/${SERVICE_NAME}.service"
+                    fi
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3
+con = sqlite3.connect('$db_file')
+con.cursor().execute('UPDATE global_configs SET web_port=? WHERE id=(SELECT id FROM global_configs LIMIT 1)', ($new_port,))
+con.commit()" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            sqlite3 "$db_file" "UPDATE global_configs SET web_port=$new_port WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    if command -v ufw >/dev/null 2>&1; then
+                        ufw allow "$new_port"/tcp >/dev/null 2>&1
+                    elif command -v firewall-cmd >/dev/null 2>&1; then
+                        firewall-cmd --zone=public --add-port="$new_port"/tcp --permanent >/dev/null 2>&1
+                        firewall-cmd --reload >/dev/null 2>&1
+                    fi
+                    systemctl daemon-reload
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ 端口已更改为 $new_port 并重启服务！${NC}"
+                    echo -e "新控制台地址: ${CYAN}http://${pub_ip}:${new_port}/ui/${NC}"
+                else
+                    echo -e "${RED}端口输入无效，已取消。${NC}"
+                fi
+                pause
+                ;;
+            4)
+                echo ""
+                read_tty "确认要将账号、密码恢复为默认 (admin / admin) 吗？[y/N]: " confirm_reset
+                if [ "$confirm_reset" = "y" ] || [ "$confirm_reset" = "Y" ]; then
+                    if [ -n "$db_file" ] && [ -f "$db_file" ]; then
+                        if command -v python3 >/dev/null 2>&1; then
+                            python3 -c "import sqlite3
+con = sqlite3.connect('$db_file')
+con.cursor().execute('UPDATE global_configs SET admin_account=\"admin\", admin_password=\"admin\" WHERE id=(SELECT id FROM global_configs LIMIT 1)')
+con.commit()" 2>/dev/null
+                        elif command -v sqlite3 >/dev/null 2>&1; then
+                            sqlite3 "$db_file" "UPDATE global_configs SET admin_account='admin', admin_password='admin' WHERE id=(SELECT id FROM global_configs LIMIT 1);" 2>/dev/null
+                        fi
+                    fi
+                    systemctl restart "$SERVICE_NAME" >/dev/null 2>&1
+                    echo -e "${GREEN}✅ 已成功恢复默认：账号 admin，密码 admin！${NC}"
+                else
+                    echo "已取消。"
+                fi
+                pause
+                ;;
+            0|*)
+                return
+                ;;
+        esac
+    fi
 }
 
 show_status() {
