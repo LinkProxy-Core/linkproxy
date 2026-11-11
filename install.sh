@@ -273,6 +273,30 @@ EOF
     fi
 }
 
+download_with_fallback() {
+    local out_file="$1"
+    local raw_url="$2"
+    local urls=(
+        "$raw_url"
+        "https://ghfast.top/${raw_url}"
+        "https://gh-proxy.com/${raw_url}"
+        "https://ghproxy.net/${raw_url}"
+    )
+    for u in "${urls[@]}"; do
+        rm -f "$out_file"
+        if wget -q --timeout=20 --tries=1 -O "$out_file" "$u" && [ -s "$out_file" ]; then
+            return 0
+        fi
+        if command -v curl >/dev/null 2>&1; then
+            if curl -fsSL --connect-timeout 10 --max-time 90 -o "$out_file" "$u" && [ -s "$out_file" ]; then
+                return 0
+            fi
+        fi
+    done
+    rm -f "$out_file"
+    return 1
+}
+
 install_proxy() {
     clear
     echo -e "${BOLD}${GREEN}==============================================${NC}"
@@ -298,7 +322,7 @@ install_proxy() {
     cd "$WORK_DIR" || exit 1
 
     echo -e "  -> 正在拉取官方稳定版安装包..."
-    if wget -q --timeout=30 -O linkproxy-linux-amd64.tar.gz "$DOWNLOAD_URL"; then
+    if download_with_fallback linkproxy-linux-amd64.tar.gz "$DOWNLOAD_URL"; then
         tar -zxf linkproxy-linux-amd64.tar.gz
         chmod +x "$BINARY_NAME"
         rm -f linkproxy-linux-amd64.tar.gz
@@ -345,12 +369,20 @@ EOF
     echo -e "${BOLD}${GREEN}==============================================${NC}"
     if [ "$ML_LANG" = "en" ]; then
         echo -e "${GREEN}🎉 Installation completed successfully!${NC}"
-        echo -e "Web Console URL: ${CYAN}http://${pub_ip}:${current_port}/ui/${NC}"
-        echo -e "Command shortcut: Type ${GREEN}linkproxy${NC} anytime to manage."
+        echo -e "🚀 Web Console URL: ${CYAN}http://${pub_ip}:${current_port}/ui/${NC}"
+        echo -e "💡 Command shortcut: Type ${GREEN}linkproxy${NC} anytime to manage."
+        echo -e "💬 Community Support:"
+        echo -e "   • Telegram: ${CYAN}https://t.me/+fKG-u6OEDexlMDIx${NC}"
+        echo -e "   • QQ Group:  ${CYAN}812127094${NC}"
+        echo -e "🌟 If it helps, please star us on GitHub: ${YELLOW}https://github.com/LinkProxy-Core/linkproxy${NC}"
     else
         echo -e "${GREEN}🎉 安装部署圆满完成！${NC}"
         echo -e "🚀 控制台访问地址: ${CYAN}http://${pub_ip}:${current_port}/ui/${NC}"
         echo -e "💡 快捷管理命令: 以后在终端随时输入 ${GREEN}linkproxy${NC} 即可打开本控制台"
+        echo -e "💬 交流与社区支持:"
+        echo -e "   • Telegram 官方群: ${CYAN}https://t.me/+fKG-u6OEDexlMDIx${NC}"
+        echo -e "   • 官方 QQ 交流群:  ${CYAN}812127094${NC}"
+        echo -e "🌟 如果对您有帮助，请前往 GitHub 给项目点个 Star 支持：${YELLOW}https://github.com/LinkProxy-Core/linkproxy${NC}"
     fi
     echo -e "${BOLD}${GREEN}==============================================${NC}"
     pause
@@ -365,7 +397,7 @@ update_proxy() {
             echo -e "${GREEN}-> 正在自动平滑迁移数据库与配置至 LinkProxy 架构...${NC}"
             mkdir -p "$WORK_DIR"
             cd "$WORK_DIR" || exit 1
-            if wget -q --timeout=30 -O linkproxy-linux-amd64-new.tar.gz "$DOWNLOAD_URL"; then
+            if download_with_fallback linkproxy-linux-amd64-new.tar.gz "$DOWNLOAD_URL"; then
                 systemctl stop minerlink-proxy >/dev/null 2>&1
                 systemctl disable minerlink-proxy >/dev/null 2>&1
                 mkdir -p "$WORK_DIR/data"
@@ -428,7 +460,7 @@ EOF
 
     echo -e "-> 正在拉取最新版本核心包..."
     cd "$WORK_DIR" || exit 1
-    if wget -q --timeout=30 -O linkproxy-linux-amd64-new.tar.gz "$DOWNLOAD_URL"; then
+    if download_with_fallback linkproxy-linux-amd64-new.tar.gz "$DOWNLOAD_URL"; then
         systemctl stop "$SERVICE_NAME" >/dev/null 2>&1
         # Backup database
         if [ -f "miner_proxy.db" ]; then

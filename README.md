@@ -97,10 +97,10 @@ curl -fsSL https://github.com/LinkProxy-Core/linkproxy/releases/latest/download/
 * **初始密码**：`admin`
 * **终端快捷指令**：任意终端输入 `linkproxy` 唤出交互式管理菜单。
 
-### 2. International English Installation
+### 2. International English Installation (Unified Installer)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/install_en.sh | sudo bash
+curl -fsSL https://github.com/LinkProxy-Core/linkproxy/releases/latest/download/install.sh | sudo ML_LANG=en bash
 ```
 
 ### 3. Windows 64 位运行

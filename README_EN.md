@@ -76,7 +76,7 @@ LinkProxy is an enterprise-grade PoW mining gateway engineered for large-scale m
 Run the following command to download, install, and register systemd auto-start service:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/LinkProxy-Core/linkproxy/main/install_en.sh | sudo bash
+curl -fsSL https://github.com/LinkProxy-Core/linkproxy/releases/latest/download/install.sh | sudo ML_LANG=en bash
 ```
 
 After installation:
