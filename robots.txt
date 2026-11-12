@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://linkproxy-core.github.io/linkproxy/sitemap.xml
