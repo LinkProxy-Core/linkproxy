@@ -17,10 +17,12 @@
     <a href="https://linkproxy-core.github.io/linkproxy/">在线手册 (中文)</a>
     ·
     <a href="https://linkproxy-core.github.io/linkproxy/#/en/">Online Manual (EN)</a>
+    ·
+    <a href="https://linkproxy-core.github.io/gpu-overclock-database/">⚡ GPU Overclock Database</a>
   </p>
 
   <p align="center">
-    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.150-blue.svg?style=flat-square" alt="Version"></a>
+    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.155-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/#/en/"><img src="https://img.shields.io/badge/Docs-Online%20Manual-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
     <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg?style=flat-square" alt="Platform">
@@ -173,6 +175,15 @@ LinkProxy is benchmarked and verified against top mining pools globally for zero
 | **Custom / Stratum**| Custom Stratum Tokens | All compatible hardware and software |
 
 </details>
+
+---
+
+## 🛠️ Ecosystem Utilities
+
+* 🌐 **[GPU Overclock Database](https://linkproxy-core.github.io/gpu-overclock-database/)**
+  * **Quick Lookup**: Best overclock presets for popular GPUs and PoW algorithms (PRL, QTC, RVN, ETC, IRON, XEL, etc.).
+  * **Multi-Platform Conversion**: Automatic memory clock offset conversion for Windows MSI Afterburner (prevents driver crashes) and one-click `--cclock / --mclock / --pl` miner launch arguments.
+  * **Continuous Updates**: Automatically synchronized with latest algorithms and GPU benchmarks.
 
 ---
 

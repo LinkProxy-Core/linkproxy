@@ -21,10 +21,12 @@
     <a href="https://linkproxy-core.github.io/linkproxy/">在线手册 (中文)</a>
     ·
     <a href="https://linkproxy-core.github.io/linkproxy/#/en/">Online Manual (EN)</a>
+    ·
+    <a href="https://linkproxy-core.github.io/gpu-overclock-database/">⚡ 显卡超频数据库</a>
   </p>
 
   <p>
-    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.150-blue.svg?style=flat-square" alt="Version"></a>
+    <a href="https://github.com/LinkProxy-Core/linkproxy/releases/latest"><img src="https://img.shields.io/badge/Release-v2.2.155-blue.svg?style=flat-square" alt="Version"></a>
     <a href="https://linkproxy-core.github.io/linkproxy/"><img src="https://img.shields.io/badge/Docs-%E5%AE%98%E6%96%B9%E5%9C%A8%E7%BA%BF%E6%89%8B%E5%86%8C-brightgreen.svg?style=flat-square" alt="Docs"></a>
     <img src="https://img.shields.io/badge/Protocol-Stratum%20%7C%20EthProxy-success.svg?style=flat-square" alt="Protocol">
     <img src="https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey.svg?style=flat-square" alt="Platform">
@@ -191,6 +193,15 @@ LinkProxy 针对国内外顶级矿池的 Stratum 协议方言、VarDiff 动态�
 | | **TARI-RX** | Stratum | RandomX (处理器混合挖矿深度兼容) | 全系列 CPU 算力节点 |
 | **经典主流代币** | **SC / DASH / CKB / ALEO** | Stratum | Blake2b / X11 / Eaglesong / ZKP 证明分流 | 蚂蚁 D7/D9/K7、GPU 集群 |
 | **通用扩展** | **自定义代币** | 自适应 | 兼容主流 Stratum 变体与 JSON-RPC | 全系列矿机与算力软件 |
+
+---
+
+## 🛠️ 生态配套工具
+
+* 🌐 **[显卡挖矿超频参数速查面板 (GPU Overclock Database)](https://linkproxy-core.github.io/gpu-overclock-database/)**
+  * **币种与型号速查**：汇集主流显卡与币种（PRL / QTC / RVN / ETC / IRON / XEL 等）最佳超频预设。
+  * **多平台参数换算**：自动换算 Windows 小飞机 (Afterburner) 显存偏移量（防止驱动挂起），一键生成并复制内核 `--cclock / --mclock / --pl` 启动参数。
+  * **自动同步更新**：后台定时同步各大热门新币与新型号显卡算力调优参数。
 
 ---
 
